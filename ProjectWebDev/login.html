@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Website</title>
+    <link rel="stylesheet" href="./styleslogin.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/login.html">Login</a></li>
+                <li><a href="/purchase.html">Purchase</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <p id="head1">WELCOME BACK</p>
+        <h1 id="head2">LOGIN INTO YOUR ACCOUNT</h1>
+
+        <!-- Login Form -->
+        <form action="/login.php" method="POST">
+            <div>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" placeholder="xxxxx@xxx.com" required>
+            </div>
+            <br>
+            <div>
+                <label for="psswrd">Password:</label><br>
+                <input type="password" id="psswrd" name="psswrd" placeholder="Password" required>
+            </div>
+            <br>
+            <div>
+                <input type="reset">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+
+        <!-- Registration Redirect -->
+        <p>Don't have an account? <a href="/registration.html">Register here</a></p>
+    </main>
+</body>
+</html>

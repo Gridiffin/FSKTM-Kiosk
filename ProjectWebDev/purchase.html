@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public User Dashboard</title>
+    <link rel="stylesheet" href="./stylespurchase.css">
+    <script>
+        // Initialize cart and total
+        const cart = [];
+        let total = 0;
+
+        // Fetch menu items from localStorage or use default data
+        let menuItems = JSON.parse(localStorage.getItem("menuItems")) || [
+            { name: "Nasi Lemak", price: 10, image: "nasilemak.jpeg", category: "food" },
+            { name: "Nasi Ayam", price: 15, image: "nasiayam.jpeg", category: "food" },
+            { name: "Mee Goreng", price: 20, image: "meegoreng.jpeg", category: "food" },
+        ];
+
+        // Add item to cart
+        function addToCart(price, name) {
+            cart.push({ name, price });
+            total += price;
+            document.getElementById("total").innerText = `Total: $${total.toFixed(2)}`;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            localStorage.setItem("total", total.toFixed(2));
+        }
+
+        // Display menu items dynamically
+        function displayMenu(items) {
+            const menuContainer = document.getElementById("menu");
+            menuContainer.innerHTML = ""; // Clear the current menu
+
+            items.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "menu-item";
+
+                const img = document.createElement("img");
+                img.src = item.image;
+                img.alt = item.name;
+                img.className = "item-image";
+
+                const name = document.createElement("p");
+                name.textContent = item.name;
+
+                const price = document.createElement("p");
+                price.textContent = `$${item.price.toFixed(2)}`;
+
+                const button = document.createElement("button");
+                button.textContent = "Add to Cart";
+                button.onclick = () => addToCart(item.price, item.name);
+
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(name);
+                itemDiv.appendChild(price);
+                itemDiv.appendChild(button);
+
+                menuContainer.appendChild(itemDiv);
+            });
+        }
+
+        // Filter menu by category
+        function filterMenu(category) {
+            const filteredItems = category === "all" 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+            displayMenu(filteredItems);
+        }
+
+        // Search menu items
+        function searchMenu() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            const searchedItems = menuItems.filter(item => 
+                item.name.toLowerCase().includes(query)
+            );
+            displayMenu(searchedItems);
+        }
+
+        // Load all items on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            // Fetch updated menu items from localStorage
+            menuItems = JSON.parse(localStorage.getItem("menuItems")) || menuItems;
+            displayMenu(menuItems);
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/login.html">Login</a></li>
+                <li><a href="/purchase.html">Purchase</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Browse Products</h2>
+
+        <!-- Search Bar -->
+        <input type="text" id="search-bar" placeholder="Search for items..." oninput="searchMenu()" />
+
+        <!-- Category Filters -->
+        <div id="filters">
+            <button onclick="filterMenu('all')">All</button>
+            <button onclick="filterMenu('food')">Food</button>
+            <button onclick="filterMenu('dessert')">Dessert</button>
+            <button onclick="filterMenu('beverages')">Beverages</button>
+        </div>
+
+        <!-- Menu Items -->
+        <div id="menu">
+            <!-- Items will be dynamically loaded here -->
+        </div>
+
+        <!-- Total Value -->
+        <p id="total">Total: $0.00</p>
+
+        <!-- Checkout Button -->
+        <button id="checkout-button"><a href='/checkout.html'>Checkout ></a></button>
+    </main>
+</body>
+</html>

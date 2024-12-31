@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <link rel="stylesheet" href="./stylescheckout.css">
+    <script>
+        // Populate receipt with cart items and total
+        document.addEventListener("DOMContentLoaded", () => {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const total = localStorage.getItem("total") || "0.00";
+
+            const purchasedItemsList = document.getElementById("purchased-items");
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                purchasedItemsList.appendChild(li);
+            });
+
+            document.getElementById("total-value").textContent = `$${total}`;
+        });
+    </script>
+</head>
+<body>
+    <main>
+        <h2>Receipt</h2>
+        <p>Thank you for your purchase!</p>
+
+        <div id="receipt">
+            <p>Purchased Items:</p>
+            <ul id="purchased-items">
+                <!-- Items will be added dynamically -->
+            </ul>
+
+            <p><strong>Total:</strong> <span id="total-value">$0.00</span></p>
+        </div>
+
+        <!-- Payment Options -->
+        <h3>Choose Payment Method</h3>
+        <form action="/save_receipt.php" method="POST">
+            <input type="radio" id="cash" name="payment_method" value="cash" required>
+            <label for="cash">Cash</label><br>
+            <input type="radio" id="qr" name="payment_method" value="qr" required>
+            <label for="qr">QR Code</label><br><br>
+            <button type="submit">Confirm Payment</button>
+        </form>
+    </main>
+</body>
+</html>

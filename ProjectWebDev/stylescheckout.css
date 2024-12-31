@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main container */
+main {
+    background-color: #ffffff;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Receipt Section */
+#receipt {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+#receipt ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+#receipt ul li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+#receipt p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#receipt strong {
+    color: #333;
+}
+
+/* Heading and messages */
+h2 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Payment Options */
+form {
+    margin-top: 15px;
+    text-align: left;
+}
+
+form label {
+    font-size: 16px;
+    color: #555;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer credit (if needed) */
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #aaa;
+}
