@@ -3,64 +3,149 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    text-align: center;
-    background-color: #f9f9f9;
+    background: #e6e6e6; /* Matte greyish background */
+    color: #333;
 }
 
 /* Header Navigation */
 header {
-    background-color: darkkhaki;
-    padding: 30px;
-    color: white;
-}
-
-header nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    background-color: #5f5c6e; /* Matte muted purple */
+    padding: 8px 16px; /* Reduced padding */
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: space-between; /* Space between logo and nav container */
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
-
-header nav ul li {
-    display: inline;
-}
-
-header nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-header nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Logo Section */
-#logo-section {
-    margin: 50px auto;
+/* Logo Styles */
+#logo-link {
+    display: flex;
+    align-items: center;
 }
 
 #logo {
-    width: 150px;
+    width: 80px;
     height: auto;
+}
+
+/* Navigation Links */
+#nav-links {
+    display: flex; /* Keep links in a row */
+    gap: 15px; /* Space between links */
+    margin-left: auto; /* Pushes nav links to the right */
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 16px;
+    color: white; /* Matches the header's color scheme */
+    font-weight: bold;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.nav-link:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+/* Main Content */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+/* Content Box */
+#content-box {
+    background-color: white;
+    color: #5f5c6e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 600px;
+}
+
+#content-box p {
+    font-size: 20px;
+    line-height: 1.6;
     margin-bottom: 20px;
 }
 
-#logo-section p {
+#browse-products-btn {
+    display: inline-block;
+    padding: 10px 20px; /* Keep this as is for now */
     font-size: 18px;
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background-color: #726e7d;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#browse-products-btn:hover {
+    background-color: #3c3946; /* Keep this as is for now */
+    transform: scale(1.05);
 }
 
 /* Footer Styles */
 footer {
-    background-color: #333;
+    background-color: #5f5c6e; 
+    color: white; 
+    padding: 10px; 
+    text-align: center; 
+    position: fixed; 
+    bottom: 0; 
+    width: 100%; 
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+footer a { 
+   color: #c4c1ce; /* Softer lavender for footer links */ 
+   text-decoration: none; 
+}
+
+footer a:hover { 
+   text-decoration: underline; 
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: #333;
     color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+}
+
+header.dark-mode, footer.dark-mode {
+    background-color: #444;
+}
+
+#content-box.dark-mode {
+    background-color: #555;
+    color: white;
+}
+
+/* Dark Mode Button Styles */
+#dark-mode-btn {
+    position: absolute; /* Allows precise positioning */
+    top: 20px; /* Adjust the distance from the top */
+    right: 20px; /* Adjust the distance from the right */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #726e7d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#dark-mode-btn:hover {
+    background-color: #3c3946; /* Darker color on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
 }

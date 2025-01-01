@@ -1,0 +1,51 @@
+// Dynamic Greeting Based on Time of Day
+function setDynamicGreeting() {
+    const greetingElement = document.getElementById("dynamic-greeting");
+    const now = new Date();
+    const hours = now.getHours();
+
+    let greeting;
+    if (hours < 12) {
+        greeting = "Good Morning!";
+    } else if (hours < 18) {
+        greeting = "Good Afternoon!";
+    } else {
+        greeting = "Good Evening!";
+    }
+
+    greetingElement.textContent = `${greeting} Discover our services and products.`;
+}
+
+// Smooth Scrolling for Internal Links
+function enableSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Dark Mode Toggle
+function setupDarkModeToggle() {
+    const darkModeBtn = document.getElementById("dark-mode-btn");
+
+    darkModeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        document.querySelector("header").classList.toggle("dark-mode");
+        document.querySelector("#content-box").classList.toggle("dark-mode");
+        document.querySelector("footer").classList.toggle("dark-mode");
+    });
+}
+
+// Initialize Functions
+document.addEventListener("DOMContentLoaded", () => {
+    setDynamicGreeting();
+    enableSmoothScrolling();
+    setupDarkModeToggle();
+});
