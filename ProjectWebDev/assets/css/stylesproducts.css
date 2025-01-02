@@ -1,40 +1,44 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background: #f5f3ff; /* Light purple background */
+    color: #4a4a4a; /* Dark gray for text */
     text-align: center;
 }
 
+/* Header Section */
 header {
-    background-color: darkkhaki;
-    padding: 14px;
-    color: white;
+    background-color: #6d5b97; /* Muted purple */
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Navigation Links */
 nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav ul li {
-    display: inline;
+    gap: 15px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s, transform 0.2s;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #c4c1ce; /* Softer lavender for hover effect */
+    transform: scale(1.1);
 }
 
-/* Menu styles */
+/* Menu Styles */
 #menu {
     display: flex;
     flex-wrap: wrap;
@@ -61,22 +65,25 @@ nav ul li a:hover {
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #8a7faf; /* Light purple */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
 }
 
 #total {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
+    color: #6d5b97; /* Muted purple */
 }
 
 #checkout-button a {
@@ -87,13 +94,15 @@ button:hover {
 #checkout-button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #8a7faf; /* Light purple */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #checkout-button:hover {
-    background-color: #218838;
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
 }

@@ -1,44 +1,44 @@
-/* stylesregister.css */
-
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background: #f5f3ff; /* Light purple background */
+    color: #4a4a4a; /* Dark gray for text */
     text-align: center;
 }
 
-/* Header Navigation */
+/* Header Section */
 header {
-    background-color: darkkhaki;
-    padding: 14px;
-    color: white;
+    background-color: #6d5b97; /* Muted purple */
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Navigation Links */
 nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav ul li {
-    display: inline;
+    gap: 15px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s, transform 0.2s;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #c4c1ce; /* Softer lavender for hover effect */
+    transform: scale(1.1);
 }
 
-/* Main Content Styles */
+/* Main Content */
 main {
     max-width: 400px;
     margin: 30px auto;
@@ -52,7 +52,7 @@ main {
 form {
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 15px;
 }
 
 label {
@@ -61,7 +61,7 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="password"], select {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -72,148 +72,28 @@ input[type="text"]:focus,
 input[type="email"]:focus, 
 input[type="password"]:focus, 
 select:focus {
-    border-color: #007bff;
+    border-color: #8a7faf; /* Light purple */
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 5px rgba(138, 127, 175, 0.5);
 }
 
 input[type="submit"] {
     padding: 10px;
-    background-color: #007bff;
+    background-color: #8a7faf; /* Light purple */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
 }
 
 input[type="submit"]:active {
-    background-color: #003f7f;
-}
-
-select {
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* Additional Styles */
-main form {
-    margin-top: 10px;
-}
-
-main form input[type="text"],
-main form input[type="email"],
-main form input[type="password"],
-main form select {
-    font-size: 14px;
-}
-
-main form input[type="submit"] {
-    margin-top: 10px;/* stylesregister.css */
-
-    /* General Styles */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-        text-align: center;
-    }
-    
-    /* Header Styles */
-    header {
-        background-color: darkkhaki;
-        color: white;
-        padding: 20px 0;
-    }
-    
-    header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
-    
-    /* Main Content Styles */
-    main {
-        max-width: 400px;
-        margin: 30px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: left;
-    }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    label {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    
-    input[type="text"], input[type="email"], input[type="password"], select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-    
-    input[type="text"]:focus, 
-    input[type="email"]:focus, 
-    input[type="password"]:focus, 
-    select:focus {
-        border-color: #007bff;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-    
-    input[type="submit"] {
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-    
-    input[type="submit"]:active {
-        background-color: #003f7f;
-    }
-    
-    select {
-        font-size: 14px;
-        cursor: pointer;
-    }
-    
-    /* Additional Styles */
-    main form {
-        margin-top: 10px;
-    }
-    
-    main form input[type="text"],
-    main form input[type="email"],
-    main form input[type="password"],
-    main form select {
-        font-size: 14px;
-    }
-    
-    main form input[type="submit"] {
-        margin-top: 10px;
-    }
-    
+    background-color: #5a4a7f; /* Even darker purple */
 }

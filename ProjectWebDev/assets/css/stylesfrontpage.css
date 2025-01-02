@@ -3,13 +3,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #e6e6e6; /* Matte greyish background */
-    color: #333;
+    background: #f5f3ff; /* Light purple background */
+    color: #4a4a4a; /* Dark gray for text */
 }
 
 /* Header Navigation */
 header {
-    background-color: #5f5c6e; /* Matte muted purple */
+    background-color: #6d5b97; /* Muted purple */
     padding: 8px 16px; /* Reduced padding */
     display: flex;
     justify-content: space-between; /* Space between logo, center text, and grouped container */
@@ -75,7 +75,7 @@ header {
     padding: 10px 15px;
     font-size: 14px;
     color: white;
-    background-color: #726e7d;
+    background-color: #8a7faf; /* Light purple */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -83,13 +83,13 @@ header {
 }
 
 #dark-mode-btn:hover {
-    background-color: #3c3946; /* Darker color on hover */
+    background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05); /* Slight zoom on hover */
 }
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./assets/images/hero-bg.jpg');
+    background: linear-gradient(rgba(109, 91, 151, 0.8), rgba(109, 91, 151, 0.8)), url('./assets/images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     height: 400px;
@@ -116,13 +116,13 @@ header {
     font-weight: bold;
     text-decoration: none;
     color: white;
-    background-color: #726e7d;
+    background-color: #8a7faf; /* Light purple */
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .hero-btn:hover {
-    background-color: #3c3946;
+    background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05);
 }
 
@@ -136,6 +136,7 @@ header {
 #products h2 {
     font-size: 32px;
     margin-bottom: 20px;
+    color: #6d5b97; /* Muted purple */
 }
 
 .products-container {
@@ -146,34 +147,40 @@ header {
 
 .product {
     max-width: 300px;
+    background-color: #f5f3ff; /* Light purple background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product i {
     font-size: 40px;
     margin-bottom: 10px;
-    color: #5f5c6e;
+    color: #6d5b97; /* Muted purple */
 }
 
 .product h3 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #4a4a4a; /* Dark gray */
 }
 
 .product p {
     font-size: 16px;
-    color: #666;
+    color: #666; /* Gray */
 }
 
 /* Testimonials Section */
 #testimonials {
     padding: 40px 20px;
-    background-color: #f4f4f4;
+    background-color: #f5f3ff; /* Light purple background */
     text-align: center;
 }
 
 #testimonials h2 {
     font-size: 32px;
     margin-bottom: 20px;
+    color: #6d5b97; /* Muted purple */
 }
 
 .testimonials-container {
@@ -193,16 +200,17 @@ header {
 .testimonial p {
     font-size: 16px;
     margin-bottom: 10px;
+    color: #4a4a4a; /* Dark gray */
 }
 
 .testimonial span {
     font-size: 14px;
-    color: #666;
+    color: #666; /* Gray */
 }
 
 /* Footer Section */
 footer {
-    background-color: #5f5c6e; 
+    background-color: #6d5b97; /* Muted purple */
     color: white; 
     padding: 20px; 
     text-align: center; 
@@ -229,7 +237,7 @@ footer {
 }
 
 .social-media a:hover {
-    color: #c4c1ce;
+    color: #c4c1ce; /* Softer lavender for hover effect */
 }
 
 /* Dark Mode Styles */
@@ -242,7 +250,34 @@ header.dark-mode, footer.dark-mode {
     background-color: #444;
 }
 
-#content-box.dark-mode {
+#hero.dark-mode {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./assets/images/hero-bg.jpg');
+    color: white;
+}
+
+#products.dark-mode {
+    background-color: #444;
+    color: white;
+}
+
+#products.dark-mode .product i {
+    color: #c4c1ce;
+}
+
+#products.dark-mode .product p {
+    color: #c4c1ce;
+}
+
+#testimonials.dark-mode {
     background-color: #555;
     color: white;
+}
+
+#testimonials.dark-mode .testimonial {
+    background-color: #444;
+    color: white;
+}
+
+#testimonials.dark-mode .testimonial span {
+    color: #c4c1ce;
 }

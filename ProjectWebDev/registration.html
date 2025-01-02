@@ -7,17 +7,28 @@
     <link rel="stylesheet" href="./assets/css/stylesregistration.css">
 </head>
 <body>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="./login.html">Login</a></li>
-                    <li><a href="./purchase.html">Purchase</a></li>
-                </ul>
+    <!-- Header Section -->
+    <header>
+        <div id="logo-container">
+            <a href="./index.html" id="logo-link">
+                <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
+            </a>
+        </div>
+        <div id="header-center-text">
+            <h1>FSKTM Kiosk</h1>
+        </div>
+        <div id="nav-and-dark-mode-container">
+            <nav id="nav-links">
+                <a href="./index.html" class="nav-link">Home</a>
+                <a href="./login.html" class="nav-link">Login</a>
+                <a href="./purchase.html" class="nav-link">Purchase</a>
             </nav>
-        </header>
+            <button id="dark-mode-btn">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
 
-    <!-- Main Content -->
     <main>
         <p id="head1">WELCOME</p>
         <h1 id="head2">REGISTER YOUR ACCOUNT</h1>
@@ -33,7 +44,6 @@
             <input type="password" id="password" name="password" 
                    placeholder="6-8 characters with uppercase, number, special character" 
                    pattern="(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W).{6,8}" required><br><br>
-
 
             <input type="submit" value="Register">
         </form>
