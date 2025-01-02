@@ -1,6 +1,5 @@
 <?php
 include 'connection.php';
-
 $users = [
     ['email' => 'admin@example.com', 'password' => 'adminpass', 'role' => 'admin'],
     ['email' => 'user1@example.com', 'password' => 'userpass1', 'role' => 'user'],
