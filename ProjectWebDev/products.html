@@ -44,7 +44,7 @@
                 name.textContent = item.name;
 
                 const price = document.createElement("p");
-                price.textContent = `$${item.price.toFixed(2)}`;
+                price.textContent = `RM${item.price.toFixed(2)}`;
 
                 const button = document.createElement("button");
                 button.textContent = "Add to Cart";
@@ -127,7 +127,7 @@
         </div>
 
         <!-- Total Value -->
-        <p id="total">Total: $0.00</p>
+        <p id="total">Total: RM0.00</p>
 
         <!-- Checkout Button -->
         <button id="checkout-button"><a href='./checkout.html'>Checkout ></a></button>
