@@ -14,7 +14,7 @@
             const purchasedItemsList = document.getElementById("purchased-items");
             cart.forEach(item => {
                 const li = document.createElement("li");
-                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                li.textContent = `${item.name} - RM${item.price.toFixed(2)}`;
                 purchasedItemsList.appendChild(li);
             });
 
@@ -55,7 +55,7 @@
                 <!-- Items will be added dynamically -->
             </ul>
 
-            <p><strong>Total:</strong> <span id="total-value">$0.00</span></p>
+            <p><strong>Total:</strong> <span id="total-value">RM0.00</span></p>
         </div>
 
         <!-- Payment Options -->
