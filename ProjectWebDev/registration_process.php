@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "This email is already registered. Please <a href='login.html'>log in</a>.";
     } else {
         // Insert new user into the database
-        $insertQuery = "INSERT INTO members (memberName, memberEmail, memberpswd) VALUES ('$Name', '$email', '$hashedPassword')";
+        $insertQuery = "INSERT INTO member (memberName, memberEmail, memberpswd) VALUES ('$Name', '$email', '$hashedPassword')";
 
         if ($conn->query($insertQuery) === TRUE) {
             echo "Registration successful. You can now <a href='login.html'>log in</a>.";
