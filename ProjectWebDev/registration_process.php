@@ -3,15 +3,15 @@ include 'connection.php'; // Include database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and collect form input
-    $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $fullname = mysqli_real_escape_string($conn, $_POST['memberName']);
+    $email = mysqli_real_escape_string($conn, $_POST['memberEmail']);
+    $password = mysqli_real_escape_string($conn, $_POST['memberPswd']);
 
     // Hash the password for security
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
     // Check if the email already exists in the database
-    $checkEmailQuery = "SELECT * FROM users WHERE email = '$email'";
+    $checkEmailQuery = "SELECT * FROM member WHERE email = '$memberEmail'";
     $result = $conn->query($checkEmailQuery);
 
     if ($result->num_rows > 0) {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "This email is already registered. Please <a href='login.html'>log in</a>.";
     } else {
         // Insert new user into the database
-        $insertQuery = "INSERT INTO users (fullname, email, password) VALUES ('$fullname', '$email', '$hashedPassword')";
+        $insertQuery = "INSERT INTO members (memberName, memberEmail, memberpswd) VALUES ('$Name', '$email', '$hashedPassword')";
 
         if ($conn->query($insertQuery) === TRUE) {
             echo "Registration successful. You can now <a href='login.html'>log in</a>.";
