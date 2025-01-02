@@ -5,7 +5,6 @@ $users = [
     ['email' => 'user1@example.com', 'password' => 'userpass1', 'role' => 'user'],
     ['email' => 'user2@example.com', 'password' => 'userpass2', 'role' => 'user']
 ];
-
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
