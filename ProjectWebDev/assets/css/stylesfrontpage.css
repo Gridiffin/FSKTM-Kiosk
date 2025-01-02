@@ -12,15 +12,16 @@ header {
     background-color: #5f5c6e; /* Matte muted purple */
     padding: 8px 16px; /* Reduced padding */
     display: flex;
-    justify-content: space-between; /* Space between logo and nav container */
+    justify-content: space-between; /* Space between logo, center text, and grouped container */
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
-/* Logo Styles */
-#logo-link {
+
+/* Logo Container */
+#logo-container {
     display: flex;
     align-items: center;
 }
@@ -30,11 +31,30 @@ header {
     height: auto;
 }
 
+/* Centered Text */
+#header-center-text {
+    position: absolute; /* Positions the text absolutely within the header */
+    left: 50%; /* Moves the text to the horizontal center */
+    transform: translateX(-50%); /* Adjusts for the text's own width */
+}
+
+#header-center-text h1 {
+    margin: 0; /* Removes default margin */
+    font-size: 24px; /* Adjust font size as needed */
+    color: white; /* Matches the header's color scheme */
+}
+
+/* Grouped Navigation Links and Dark Mode Button Container */
+#nav-and-dark-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between nav links and dark mode button */
+}
+
 /* Navigation Links */
 #nav-links {
-    display: flex; /* Keep links in a row */
+    display: flex;
     gap: 15px; /* Space between links */
-    margin-left: auto; /* Pushes nav links to the right */
 }
 
 .nav-link {
@@ -50,36 +70,48 @@ header {
     transform: scale(1.1); /* Slight zoom on hover */
 }
 
+/* Dark Mode Button Styles */
+#dark-mode-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #726e7d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
 
-/* Main Content */
-main {
+#dark-mode-btn:hover {
+    background-color: #3c3946; /* Darker color on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Hero Section */
+#hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./assets/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 80px);
-    padding: 20px;
-}
-
-/* Content Box */
-#content-box {
-    background-color: white;
-    color: #5f5c6e;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    color: white;
     text-align: center;
-    max-width: 600px;
 }
 
-#content-box p {
+.hero-content h2 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
     font-size: 20px;
-    line-height: 1.6;
     margin-bottom: 20px;
 }
 
-#browse-products-btn {
-    display: inline-block;
-    padding: 10px 20px; /* Keep this as is for now */
+.hero-btn {
+    padding: 10px 20px;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
@@ -89,30 +121,115 @@ main {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-#browse-products-btn:hover {
-    background-color: #3c3946; /* Keep this as is for now */
+.hero-btn:hover {
+    background-color: #3c3946;
     transform: scale(1.05);
 }
 
-/* Footer Styles */
+/* Products Section */
+#products {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: white;
+}
+
+#products h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.products-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.product {
+    max-width: 300px;
+}
+
+.product i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #5f5c6e;
+}
+
+.product h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Testimonials Section */
+#testimonials {
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+#testimonials h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.testimonials-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.testimonial {
+    max-width: 300px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.testimonial span {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Footer Section */
 footer {
     background-color: #5f5c6e; 
     color: white; 
-    padding: 10px; 
+    padding: 20px; 
     text-align: center; 
-    position: fixed; 
-    bottom: 0; 
-    width: 100%; 
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2); 
 }
 
-footer a { 
-   color: #c4c1ce; /* Softer lavender for footer links */ 
-   text-decoration: none; 
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-footer a:hover { 
-   text-decoration: underline; 
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-media a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-media a:hover {
+    color: #c4c1ce;
 }
 
 /* Dark Mode Styles */
@@ -128,24 +245,4 @@ header.dark-mode, footer.dark-mode {
 #content-box.dark-mode {
     background-color: #555;
     color: white;
-}
-
-/* Dark Mode Button Styles */
-#dark-mode-btn {
-    position: absolute; /* Allows precise positioning */
-    top: 20px; /* Adjust the distance from the top */
-    right: 20px; /* Adjust the distance from the right */
-    padding: 10px 15px;
-    font-size: 14px;
-    color: white;
-    background-color: #726e7d;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#dark-mode-btn:hover {
-    background-color: #3c3946; /* Darker color on hover */
-    transform: scale(1.05); /* Slight zoom on hover */
 }
