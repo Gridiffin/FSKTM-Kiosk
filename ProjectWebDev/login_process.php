@@ -1,11 +1,5 @@
 <?php
 include 'connection.php';
-$users = [
-    ['email' => 'admin@example.com', 'password' => 'adminpass', 'role' => 'admin'],
-    ['email' => 'user1@example.com', 'password' => 'userpass1', 'role' => 'user'],
-    ['email' => 'user2@example.com', 'password' => 'userpass2', 'role' => 'user']
-];
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
@@ -23,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($foundUser['role'] === 'admin') {
             echo "Welcome Admin! Redirecting to the admin dashboard...";
             // Replace with actual redirection
-            header('Location: /admin_dashboard.php');
+            header('Location: /admin.html');
         } else {
-            echo "Welcome back, user! Redirecting to your dashboard...";
+            echo "Welcome back, member! Redirecting to your dashboard...";
             // Replace with actual redirection
             header('Location: /user_dashboard.php');
         }
