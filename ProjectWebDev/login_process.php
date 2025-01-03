@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Welcome back, member! Redirecting to your dashboard...";
             // Replace with actual redirection
-            header('Location: /user_dashboard.php');
+            header('Location: /index.html');
         }
         exit;
     } else {
