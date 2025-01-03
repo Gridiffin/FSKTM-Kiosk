@@ -19,24 +19,26 @@ header {
 }
 
 /* Navigation Links */
-nav ul {
+header nav a {
     list-style: none;
+    margin: 0;
     padding: 0;
-    display: flex;
+    display: flex inline;
     gap: 15px;
-}
-
-nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s, transform 0.2s;
-}
-
-nav ul li a:hover {
-    color: #c4c1ce; /* Softer lavender for hover effect */
-    transform: scale(1.1);
-}
+  }
+  
+header div h1 {
+    color: white;
+  }
+  
+header div a img {
+    width: 80px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+  }
 
 /* Main Content */
 main {
