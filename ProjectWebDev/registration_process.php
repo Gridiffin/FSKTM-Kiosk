@@ -1,6 +1,5 @@
 <?php
 include 'connection.php'; // Include database connection
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and collect form input
     $fullname = mysqli_real_escape_string($conn, $_POST['memberName']);
