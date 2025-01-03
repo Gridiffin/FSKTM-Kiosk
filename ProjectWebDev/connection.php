@@ -1,6 +1,6 @@
 <?php
 // Database connection details
-$servername = "srv1760.hstgr.io";
+$servername = "127.0.0.1";
 $username = "u455195652_fsktmkiosk"; // Update with your database username
 $password = "Webdev2024"; // Update with your database password
 $dbname = "u455195652_FSKTMkiosk"; // Update with your database name
