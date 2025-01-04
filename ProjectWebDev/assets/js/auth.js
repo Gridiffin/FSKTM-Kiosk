@@ -6,7 +6,7 @@ function checkLoginStatus() {
 
     if (email) {
         // User is logged in
-        loginLink.textContent = 'Profile'; // Change "Login" to "Profile"
+        loginLink.innerHTML = '<i class="fas fa-user"></i>'; // Replace "Login" with a user icon
         loginLink.href = 'profile.html?email=' + encodeURIComponent(email);
 
         // Hide the Register button

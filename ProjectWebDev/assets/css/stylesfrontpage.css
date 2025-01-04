@@ -51,23 +51,85 @@ header {
     gap: 15px; /* Space between nav links and dark mode button */
 }
 
-/* Navigation Links */
+/* Navigation Links Container */
 #nav-links {
     display: flex;
-    gap: 15px; /* Space between links */
+    gap: 10px; /* Space between links */
 }
 
-.nav-link {
-    text-decoration: none;
-    font-size: 16px;
-    color: white; /* Matches the header's color scheme */
+/* Login Link (When User is Not Logged In) */
+#login-link {
+    padding: 10px 15px; /* Padding for consistency */
+    font-size: 14px; /* Match the dark mode button font size */
+    color: white; /* Match the header's color scheme */
+    background-color: transparent; /* No background */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: color 0.3s, transform 0.2s; /* Smooth transitions */
+    text-decoration: none; /* Remove underline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
+}
+
+#login-link:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Profile Icon Link (When User is Logged In) */
+#login-link.profile-icon {
+    padding: 10px 15px; /* Match the dark mode button padding */
+    font-size: 14px; /* Match the dark mode button font size */
+    color: white; /* Match the header's color scheme */
+    background-color: #8a7faf; /* Light purple background */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    text-decoration: none; /* Remove underline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-link.profile-icon:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+#login-link.profile-icon i {
+    font-size: 20px; /* Adjust the size of the icon */
+    color: white; /* Match the header's color scheme */
     transition: color 0.3s, transform 0.2s;
 }
 
-.nav-link:hover {
+#login-link.profile-icon:hover i {
     color: #c4c1ce; /* Softer lavender for hover effect */
-    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/* Register Link */
+#register-link {
+    padding: 10px 15px; /* Padding for consistency */
+    font-size: 14px; /* Match the dark mode button font size */
+    color: white; /* Match the header's color scheme */
+    background-color: transparent; /* No background */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: color 0.3s, transform 0.2s; /* Smooth transitions */
+    text-decoration: none; /* Remove underline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+#register-link:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
+    transform: scale(1.05); /* Slight zoom on hover */
 }
 
 /* Dark Mode Button Styles */
@@ -84,7 +146,7 @@ header {
 
 #dark-mode-btn:hover {
     background-color: #6d5b97; /* Darker purple on hover */
-    transform: scale(1.05); /* Slight zoom on hover */
+    transform: scale(1.05);
 }
 
 /* Hero Section */
@@ -211,10 +273,10 @@ header {
 /* Footer Section */
 footer {
     background-color: #6d5b97; /* Muted purple */
-    color: white; 
-    padding: 20px; 
-    text-align: center; 
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2); 
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .footer-content {
