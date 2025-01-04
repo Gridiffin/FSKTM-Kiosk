@@ -50,56 +50,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - My Website</title>
     <link rel="stylesheet" href="./assets/css/stylesregistration.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Header Section -->
     <header>
+        <!-- Logo Container -->
         <div id="logo-container">
             <a href="./index.html" id="logo-link">
                 <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
             </a>
         </div>
+
+        <!-- Centered Text -->
         <div id="header-center-text">
             <h1>FSKTM Kiosk</h1>
         </div>
+
+        <!-- Grouped Navigation Links and Dark Mode Button -->
         <div id="nav-and-dark-mode-container">
-            <nav id="nav-links">
-                <a href="./index.html" class="nav-link">Home</a>
-                <a href="./login.html" class="nav-link">Login</a>
-                <a href="./purchase.html" class="nav-link">Purchase</a>
-            </nav>
-            <button id="dark-mode-btn">
+            <!-- Home Button (Icon) -->
+            <a href="./index.html" id="home-btn" class="icon-btn">
+                <i class="fas fa-home"></i>
+            </a>
+
+            <!-- Dark Mode Toggle Icon -->
+            <button id="dark-mode-btn" class="icon-btn">
                 <i id="dark-mode-icon" class="fas fa-moon"></i>
             </button>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main>
-        <p id="head1">WELCOME</p>
-        <h1 id="head2">REGISTER YOUR ACCOUNT</h1>
+        <!-- Registration Container -->
+        <div class="registration-container">
+            <p id="head1">WELCOME</p>
+            <h1 id="head2">NEW MEMBER</h1>
 
-        <?php if (isset($successMessage)): ?>
-            <div class="success-message">
-                <?php echo $successMessage; ?>
-            </div>
-        <?php elseif (isset($errorMessage)): ?>
-            <div class="error-message">
-                <?php echo $errorMessage; ?>
-            </div>
-        <?php else: ?>
-            <form action="./registration_process.php" method="POST">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Your Full Name" required><br><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Your Email" required><br><br>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" 
-                       placeholder="6-8 characters with uppercase, number, special character" required>
-                <input type="submit" value="Register">
-            </form>
-        <?php endif; ?>
+            <?php if (isset($successMessage)): ?>
+                <div class="success-message">
+                    <?php echo $successMessage; ?>
+                </div>
+            <?php elseif (isset($errorMessage)): ?>
+                <div class="error-message">
+                    <?php echo $errorMessage; ?>
+                </div>
+            <?php else: ?>
+                <form action="./registration_process.php" method="POST">
+                    <div class="form-group">
+                        <label for="fullname">Full Name:</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" 
+                               placeholder="6-8 characters with uppercase, number, special character" required>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" value="Register" class="btn-register">
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
     </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="./assets/js/registration.js"></script>
 </body>
 </html>
