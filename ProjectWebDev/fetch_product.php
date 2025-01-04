@@ -3,7 +3,7 @@
 include 'connection.php';
 
 // Fetch products from the database
-$query = "SELECT prodName AS name, CAST(prodPrice AS DECIMAL(10,2)) AS price, prodPic AS image, prodType AS category FROM product";
+$query = "SELECT prodID, prodName AS name, CAST(prodPrice AS DECIMAL(10,2)) AS price, prodPic AS image, prodType AS category FROM product";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
