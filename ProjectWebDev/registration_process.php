@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Send OTP via email
             $subject = "Your OTP for Registration";
             $message = "Your OTP for registration is: $otp";
-            $headers = "From: no-reply@yourwebsite.com";
+            $headers = "From: admin@fsktm.store";
 
             if (mail($email, $subject, $message, $headers)) {
                 $successMessage = "Registration successful. Please check your email for the OTP to verify your account.";
