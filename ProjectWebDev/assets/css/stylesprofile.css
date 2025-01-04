@@ -1,0 +1,215 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f3ff; /* Light purple background */
+    color: black; /* Dark gray for text */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+}
+
+/* Header Section */
+header {
+    background-color: #6d5b97; /* Muted purple */
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo Container */
+#logo-container {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    width: 80px;
+    height: auto;
+}
+
+/* Centered Text */
+#header-center-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#header-center-text h1 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+/* Grouped Navigation Links and Dark Mode Button Container */
+#nav-and-dark-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Dark Mode Button Styles */
+#dark-mode-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #8a7faf; /* Light purple */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#dark-mode-btn:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
+
+/* Main Content */
+main {
+    flex: 1; /* Allow the main content to grow and take up remaining space */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Profile Container */
+.profile-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Profile Heading */
+#profile-heading {
+    font-size: 24px;
+    color: #6d5b97; /* Muted purple */
+    margin-bottom: 20px;
+}
+
+/* Profile Information */
+.profile-info {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #4a4a4a; /* Dark gray */
+}
+
+.profile-info strong {
+    color: #6d5b97; /* Muted purple */
+}
+
+/* Edit Profile Button */
+.btn-edit {
+    padding: 10px 20px;
+    background-color: #8a7faf; /* Light purple */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-edit:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
+
+/* Error Message */
+.error-message {
+    color: #ff4d4d; /* Red for errors */
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Footer Section */
+footer {
+    background-color: #6d5b97; /* Muted purple */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-media a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-media a:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
+}
+
+/* Icon Button Styles */
+.icon-btn {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #8a7faf; /* Light purple */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none; /* Remove underline for the home button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
+
+/* Dark Mode Button */
+#dark-mode-btn {
+    padding: 10px;
+}
+
+/* Home Button */
+#home-btn {
+    padding: 10px;
+}

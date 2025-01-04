@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - FSKTM Kiosk</title>
+    <link rel="stylesheet" href="./assets/css/stylesprofile.css"> <!-- Link to your CSS file -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <!-- Logo Container -->
+        <div id="logo-container">
+            <a href="./index.html" id="logo-link">
+                <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
+            </a>
+        </div>
+
+        <!-- Centered Text -->
+        <div id="header-center-text">
+            <h1>FSKTM Kiosk</h1>
+        </div>
+
+        <!-- Grouped Navigation Links and Dark Mode Button -->
+        <div id="nav-and-dark-mode-container">
+            <!-- Home Button (Icon) -->
+            <a href="./index.html" id="home-btn" class="icon-btn">
+                <i class="fas fa-home"></i>
+            </a>
+
+            <!-- Dark Mode Toggle Icon -->
+            <button id="dark-mode-btn" class="icon-btn">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Profile Container -->
+        <div class="profile-container">
+            <h1 id="profile-heading">Your Profile</h1>
+
+            <!-- Placeholder for User Data -->
+            <div id="profile-info">
+                <!-- User data will be dynamically inserted here -->
+            </div>
+
+            <!-- Placeholder for Error Message -->
+            <div id="error-message" class="error-message" style="display: none;">
+                <!-- Error messages will be dynamically inserted here -->
+            </div>
+
+            <!-- Edit Profile Button -->
+            <div class="profile-actions">
+                <button id="edit-profile-btn" class="btn-edit">Edit Profile</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Fetch user data from profile.php
+        async function fetchUserData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+
+            if (!email) {
+                showError("No email provided.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`profile.php?email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+
+                if (data.errorMessage) {
+                    showError(data.errorMessage);
+                } else if (data.userData) {
+                    displayUserData(data.userData);
+                } else {
+                    showError("No profile data found.");
+                }
+            } catch (error) {
+                showError("Failed to fetch profile data.");
+            }
+        }
+
+        // Display user data
+        function displayUserData(userData) {
+            const profileInfo = document.getElementById("profile-info");
+            profileInfo.innerHTML = `
+                <p><strong>Full Name:</strong> ${userData.memberName}</p>
+                <p><strong>Email:</strong> ${userData.memberEmail}</p>
+            `;
+        }
+
+        // Display error message
+        function showError(message) {
+            const errorMessageDiv = document.getElementById("error-message");
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = "block";
+        }
+
+        // Edit Profile Button Functionality
+        document.getElementById("edit-profile-btn")?.addEventListener("click", () => {
+            const email = new URLSearchParams(window.location.search).get('email');
+            if (email) {
+                window.location.href = `edit_profile.html?email=${encodeURIComponent(email)}`;
+            } else {
+                alert("No email provided.");
+            }
+        });
+
+        // Fetch user data when the page loads
+        fetchUserData();
+    </script>
+</body>
+</html>
