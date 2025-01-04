@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Payments - Admin</title>
+    <link rel="stylesheet" href="./assets/css/stylesadmin.css">
+    <script>
+        // Fetch payment data from the database
+        async function fetchPayments() {
+            try {
+                const response = await fetch('fetch_payments.php');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch payments');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching payments:', error);
+                return [];
+            }
+        }
+
+        // Display payment data in the admin panel
+        async function displayPayments() {
+            const paymentsContainer = document.getElementById("payments-container");
+            paymentsContainer.innerHTML = ""; // Clear existing content
+
+            const payments = await fetchPayments();
+            console.log("Fetched payments:", payments); // Debugging line
+
+            if (payments.length === 0) {
+                paymentsContainer.innerHTML = "<p>No payments found.</p>";
+                return;
+            }
+
+            // Create a table to display payment data
+            const table = document.createElement("table");
+            table.className = "payments-table";
+
+            // Table header
+            const headerRow = document.createElement("tr");
+            const headers = ["Payment ID", "Member ID", "Product ID", "Product Name", "Amount", "Price", "Total Payment", "Status"];
+            headers.forEach(headerText => {
+                const header = document.createElement("th");
+                header.textContent = headerText;
+                headerRow.appendChild(header);
+            });
+            table.appendChild(headerRow);
+
+            // Table rows for each payment
+            payments.forEach(payment => {
+                const row = document.createElement("tr");
+
+                const columns = [
+                    payment.payID,
+                    payment.memberID,
+                    payment.prodID,
+                    payment.prodName,
+                    payment.amount,
+                    `RM${payment.prodPrice.toFixed(2)}`,
+                    `RM${payment.totalPay.toFixed(2)}`,
+                    payment.status
+                ];
+
+                columns.forEach(columnText => {
+                    const column = document.createElement("td");
+                    column.textContent = columnText;
+                    row.appendChild(column);
+                });
+
+                table.appendChild(row);
+            });
+
+            paymentsContainer.appendChild(table);
+        }
+
+        // Load payment data on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            displayPayments();
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <!-- Logo Container -->
+        <div id="logo-container">
+            <a href="./index.html" id="logo-link">
+                <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
+            </a>
+        </div>
+
+        <!-- Centered Text -->
+        <div id="header-center-text">
+            <h1>FSKTM Kiosk</h1>
+        </div>
+
+        <!-- Grouped Navigation Links and Dark Mode Button -->
+        <div id="nav-and-dark-mode-container">
+            <!-- Navigation Links -->
+            <nav id="nav-links">
+                <a href="./index.html" class="nav-link">Home</a>
+                <a href="./login.html" class="nav-link">Login</a>
+                <a href="./purchase.html" class="nav-link">Purchase</a>
+                <a href="./admin.html" class="nav-link">Admin</a>
+            </nav>
+
+            <!-- Dark Mode Toggle Icon -->
+            <button id="dark-mode-btn">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <h1>View Payments</h1>
+        <section>
+            <h2>Payment History</h2>
+            <div id="payments-container">
+                <!-- Payment data will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>
