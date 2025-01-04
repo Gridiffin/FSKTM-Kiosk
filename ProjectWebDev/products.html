@@ -21,15 +21,25 @@
         }
     </style>
     <script>
-        // Fetch menu items from localStorage or use default data
-        let menuItems = JSON.parse(localStorage.getItem("menuItems")) || [
-            { id: 1, name: "Nasi Lemak", price: 10, image: "./assets/images/nasilemak.jpeg", category: "food" },
-            { id: 2, name: "Nasi Ayam", price: 15, image: "./assets/images/nasiayam.jpeg", category: "food" },
-            { id: 3, name: "Mee Goreng", price: 20, image: "./assets/images/meegoreng.jpeg", category: "food" },
-        ];
+        // Initialize cart and total
+        const cart = [];
+        let total = 0;
 
-        // Initialize cart in localStorage if it doesn't exist
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // Fetch menu items from the database
+        async function fetchMenuItems() {
+            try {
+                const response = await fetch('fetch_product.php');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                console.log("Fetched products:", data); // Debug: Log the fetched data
+                return data;
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                return [];
+            }
+        }
 
         // Add item to cart
         function addToCart(itemId, name, price) {
@@ -79,7 +89,8 @@
                 name.textContent = item.name;
 
                 const price = document.createElement("p");
-                price.textContent = `RM${item.price.toFixed(2)}`;
+                const priceNumber = parseFloat(item.price); // Convert price to a number
+                price.textContent = `RM${priceNumber.toFixed(2)}`; // Use toFixed on the number
 
                 const button = document.createElement("button");
                 button.textContent = "Add to Cart";
@@ -96,27 +107,51 @@
 
         // Filter menu by category
         function filterMenu(category) {
-            const filteredItems = category === "all" 
-                ? menuItems 
-                : menuItems.filter(item => item.category === category);
-            displayMenu(filteredItems);
+            fetchMenuItems().then(items => {
+                const filteredItems = category === "all" 
+                    ? items 
+                    : items.filter(item => item.category === category);
+                displayMenu(filteredItems);
+            });
         }
 
         // Search menu items
         function searchMenu() {
             const query = document.getElementById("search-bar").value.toLowerCase();
-            const searchedItems = menuItems.filter(item => 
-                item.name.toLowerCase().includes(query)
-            );
-            displayMenu(searchedItems);
+            fetchMenuItems().then(items => {
+                const searchedItems = items.filter(item => 
+                    item.name.toLowerCase().includes(query)
+                );
+                displayMenu(searchedItems);
+            });
         }
 
         // Load all items on page load
         document.addEventListener("DOMContentLoaded", () => {
-            // Fetch updated menu items from localStorage
-            menuItems = JSON.parse(localStorage.getItem("menuItems")) || menuItems;
-            displayMenu(menuItems);
+            fetchMenuItems().then(items => {
+                displayMenu(items);
+            });
         });
+
+        // Handle checkout button click
+        function handleCheckout() {
+            // Check if the user is logged in by checking the session
+            fetch('/check_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        // User is logged in, redirect to checkout.html
+                        window.location.href = './checkout.html';
+                    } else {
+                        // User is not logged in, redirect to registration.html
+                        window.location.href = './registration.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session:', error);
+                    alert('An error occurred. Please try again.');
+                });
+        }
     </script>
 </head>
 <body>

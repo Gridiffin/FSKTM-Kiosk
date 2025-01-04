@@ -33,8 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verify the password (plaintext comparison)
         if ($password === $adminPassword) {
             // Password is correct (Admin)
-            $_SESSION['user_id'] = $row['adminID']; // Store admin ID in the session
-            $_SESSION['name'] = $row['adminName']; // Store admin name in the session
             $_SESSION['email'] = $row['adminEmail']; // Store admin email in the session
             $_SESSION['role'] = 'admin'; // Store admin role in the session
 
@@ -65,14 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verify the password (hashed comparison)
         if (password_verify($password, $hashedPassword)) {
             // Password is correct (Member)
-            $_SESSION['user_id'] = $row['memberID']; // Store member ID in the session
-            $_SESSION['name'] = $row['memberName']; // Store member name in the session
             $_SESSION['email'] = $row['memberEmail']; // Store member email in the session
             $_SESSION['role'] = 'member'; // Store member role in the session
 
-            echo "Welcome back, member! Redirecting to your dashboard...";
-            sleep(2); // Delay for 2 seconds
-            header('Location: /index.html'); // Redirect to member dashboard
+            // Output JavaScript to set sessionStorage
+            echo "<script>sessionStorage.setItem('email', '" . $row['memberEmail'] . "');</script>";
+            echo "<script>window.location.href = '/index.html';</script>"; // Redirect using JavaScript
             exit;
         } else {
             // Password is incorrect
