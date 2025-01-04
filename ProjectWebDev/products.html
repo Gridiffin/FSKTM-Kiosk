@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public User Dashboard</title>
+    <title>Products - FSKTM Kiosk</title>
     <link rel="stylesheet" href="./assets/css/stylesproducts.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script>
         // Initialize cart and total
         const cart = [];
@@ -21,7 +22,7 @@
         function addToCart(price, name) {
             cart.push({ name, price });
             total += price;
-            document.getElementById("total").innerText = `Total: $${total.toFixed(2)}`;
+            document.getElementById("total").innerText = `Total: RM${total.toFixed(2)}`;
             localStorage.setItem("cart", JSON.stringify(cart));
             localStorage.setItem("total", total.toFixed(2));
         }
@@ -87,26 +88,33 @@
 <body>
     <!-- Header Section -->
     <header>
+        <!-- Logo Container -->
         <div id="logo-container">
             <a href="./index.html" id="logo-link">
                 <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
             </a>
         </div>
+
+        <!-- Centered Text -->
         <div id="header-center-text">
             <h1>FSKTM Kiosk</h1>
         </div>
+
+        <!-- Grouped Navigation Links and Dark Mode Button -->
         <div id="nav-and-dark-mode-container">
-            <nav id="nav-links">
-                <a href="./index.html" class="nav-link">Home</a>
-                <a href="./login.html" class="nav-link">Login</a>
-                <a href="./purchase.html" class="nav-link">Purchase</a>
-            </nav>
-            <button id="dark-mode-btn">
+            <!-- Home Button (Icon) -->
+            <a href="./index.html" id="home-btn" class="icon-btn">
+                <i class="fas fa-home"></i>
+            </a>
+
+            <!-- Dark Mode Toggle Icon -->
+            <button id="dark-mode-btn" class="icon-btn">
                 <i id="dark-mode-icon" class="fas fa-moon"></i>
             </button>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main>
         <h2>Browse Products</h2>
 
@@ -132,5 +140,20 @@
         <!-- Checkout Button -->
         <button id="checkout-button"><a href='./checkout.html'>Checkout ></a></button>
     </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="./assets/js/products.js"></script>
 </body>
 </html>

@@ -6,6 +6,9 @@ body {
     background: #f5f3ff; /* Light purple background */
     color: #4a4a4a; /* Dark gray for text */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
 }
 
 /* Header Section */
@@ -16,29 +19,102 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Navigation Links */
-nav ul {
-    list-style: none;
-    padding: 0;
+/* Logo Container */
+#logo-container {
     display: flex;
-    gap: 15px;
+    align-items: center;
 }
 
-nav ul li a {
+#logo {
+    width: 80px;
+    height: auto;
+}
+
+/* Centered Text */
+#header-center-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#header-center-text h1 {
+    margin: 0;
+    font-size: 24px;
     color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s, transform 0.2s;
 }
 
-nav ul li a:hover {
-    color: #c4c1ce; /* Softer lavender for hover effect */
-    transform: scale(1.1);
+/* Grouped Navigation Links and Dark Mode Button Container */
+#nav-and-dark-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
 }
 
-/* Menu Styles */
+/* Icon Button Styles */
+.icon-btn {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #8a7faf; /* Light purple */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none; /* Remove underline for the home button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
+
+/* Main Content */
+main {
+    flex: 1; /* Allow the main content to grow and take up remaining space */
+    padding: 20px;
+}
+
+/* Search Bar */
+#search-bar {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Category Filters */
+#filters {
+    margin-bottom: 20px;
+}
+
+#filters button {
+    padding: 10px 20px;
+    background-color: #8a7faf; /* Light purple */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#filters button:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
+
+/* Menu Items */
 #menu {
     display: flex;
     flex-wrap: wrap;
@@ -63,7 +139,11 @@ nav ul li a:hover {
     border-radius: 8px;
 }
 
-button {
+.menu-item p {
+    margin: 10px 0;
+}
+
+.menu-item button {
     padding: 10px 20px;
     background-color: #8a7faf; /* Light purple */
     color: white;
@@ -74,11 +154,12 @@ button {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
+.menu-item button:hover {
     background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05);
 }
 
+/* Total Value */
 #total {
     margin-top: 20px;
     font-size: 18px;
@@ -86,11 +167,7 @@ button:hover {
     color: #6d5b97; /* Muted purple */
 }
 
-#checkout-button a {
-    color: white;
-    text-decoration: none;
-}
-
+/* Checkout Button */
 #checkout-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -105,4 +182,42 @@ button:hover {
 #checkout-button:hover {
     background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05);
+}
+
+#checkout-button a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Footer Section */
+footer {
+    background-color: #6d5b97; /* Muted purple */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-media a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-media a:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
 }
