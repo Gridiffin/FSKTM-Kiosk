@@ -6,25 +6,59 @@
     <title>Products - FSKTM Kiosk</title>
     <link rel="stylesheet" href="./assets/css/stylesproducts.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Notification styling */
+        #notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+            z-index: 1000;
+        }
+    </style>
     <script>
-        // Initialize cart and total
-        const cart = [];
-        let total = 0;
-
         // Fetch menu items from localStorage or use default data
         let menuItems = JSON.parse(localStorage.getItem("menuItems")) || [
-            { name: "Nasi Lemak", price: 10, image: "./assets/images/nasilemak.jpeg", category: "food" },
-            { name: "Nasi Ayam", price: 15, image: "./assets/images/nasiayam.jpeg", category: "food" },
-            { name: "Mee Goreng", price: 20, image: "./assets/images/meegoreng.jpeg", category: "food" },
+            { id: 1, name: "Nasi Lemak", price: 10, image: "./assets/images/nasilemak.jpeg", category: "food" },
+            { id: 2, name: "Nasi Ayam", price: 15, image: "./assets/images/nasiayam.jpeg", category: "food" },
+            { id: 3, name: "Mee Goreng", price: 20, image: "./assets/images/meegoreng.jpeg", category: "food" },
         ];
 
+        // Initialize cart in localStorage if it doesn't exist
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
         // Add item to cart
-        function addToCart(price, name) {
-            cart.push({ name, price });
-            total += price;
-            document.getElementById("total").innerText = `Total: RM${total.toFixed(2)}`;
+        function addToCart(itemId, name, price) {
+            // Check if the item already exists in the cart
+            const existingItem = cart.find(item => item.id === itemId);
+            if (existingItem) {
+                existingItem.quantity += 1; // Increase quantity if item exists
+            } else {
+                // Add new item to the cart
+                cart.push({ id: itemId, name: name, price: price, quantity: 1 });
+            }
+
+            // Save the updated cart to localStorage
             localStorage.setItem("cart", JSON.stringify(cart));
-            localStorage.setItem("total", total.toFixed(2));
+
+            // Show notification
+            showNotification("Product has been added to the cart!");
+        }
+
+        // Function to show a notification
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            notification.textContent = message;
+            notification.style.display = "block"; // Show the notification
+
+            // Hide the notification after 3 seconds
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
         }
 
         // Display menu items dynamically
@@ -49,7 +83,7 @@
 
                 const button = document.createElement("button");
                 button.textContent = "Add to Cart";
-                button.onclick = () => addToCart(item.price, item.name);
+                button.onclick = () => addToCart(item.id, item.name, item.price);
 
                 itemDiv.appendChild(img);
                 itemDiv.appendChild(name);
@@ -134,12 +168,12 @@
             <!-- Items will be dynamically loaded here -->
         </div>
 
-        <!-- Total Value -->
-        <p id="total">Total: RM0.00</p>
-
-        <!-- Checkout Button -->
-        <button id="checkout-button"><a href='./checkout.html'>Checkout ></a></button>
+        <!-- View Cart Button -->
+        <button id="checkout-button"><a href='./cart_section.html'>View Cart ></a></button>
     </main>
+
+    <!-- Notification -->
+    <div id="notification"></div>
 
     <!-- Footer Section -->
     <footer id="footer">
@@ -152,8 +186,5 @@
             </div>
         </div>
     </footer>
-
-    <!-- JavaScript -->
-    <script src="./assets/js/products.js"></script>
 </body>
 </html>
