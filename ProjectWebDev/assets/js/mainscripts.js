@@ -39,14 +39,24 @@ function enableSmoothScrolling() {
 // Dark Mode Toggle
 function setupDarkModeToggle() {
     const darkModeBtn = document.getElementById("dark-mode-btn");
+    const darkModeIcon = document.getElementById("dark-mode-icon");
 
     darkModeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
+        const isDarkMode = document.body.classList.toggle("dark-mode");
         document.querySelector("header").classList.toggle("dark-mode");
         document.querySelector("footer").classList.toggle("dark-mode");
         document.querySelector("#hero").classList.toggle("dark-mode");
         document.querySelector("#products").classList.toggle("dark-mode");
         document.querySelector("#testimonials").classList.toggle("dark-mode");
+
+        // Toggle between sun and moon icons
+        if (isDarkMode) {
+            darkModeIcon.classList.remove("fa-moon");
+            darkModeIcon.classList.add("fa-sun");
+        } else {
+            darkModeIcon.classList.remove("fa-sun");
+            darkModeIcon.classList.add("fa-moon");
+        }
     });
 }
 
