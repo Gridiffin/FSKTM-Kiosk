@@ -6,40 +6,45 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./assets/css/stylesadmin.css">
     <script>
-        // Initialize menu items
-        let menuItems = JSON.parse(localStorage.getItem("menuItems")) || [
-            { name: "Nasi Lemak", price: 10, image: "nasilemak.jpeg", category: "food" },
-            { name: "Nasi Ayam", price: 15, image: "nasiayam.jpeg", category: "food" },
-            { name: "Mee Goreng", price: 20, image: "meegoreng.jpeg", category: "food" }
-        ];
-
-        // Save menuItems to localStorage
-        function saveMenuItems() {
-            localStorage.setItem("menuItems", JSON.stringify(menuItems));
+        // Fetch products from the database
+        async function fetchProducts() {
+            try {
+                const response = await fetch('fetch_product.php');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                return [];
+            }
         }
 
-        // Display menu items in the admin panel
-        function displayAdminMenu() {
+        // Display products in the admin panel
+        async function displayAdminMenu() {
             const adminContainer = document.getElementById("admin-menu");
             adminContainer.innerHTML = ""; // Clear existing content
 
-            menuItems.forEach((item, index) => {
+            const products = await fetchProducts();
+
+            products.forEach((item, index) => {
                 const itemRow = document.createElement("div");
                 itemRow.className = "item-row";
 
                 // Item details
                 const details = document.createElement("p");
-                details.textContent = `${item.name} - $${item.price.toFixed(2)} (${item.category})`;
+                details.textContent = `${item.name} - RM${item.price.toFixed(2)} (${item.category})`;
 
                 // Edit button
                 const editButton = document.createElement("button");
                 editButton.textContent = "Edit";
-                editButton.onclick = () => editItem(index);
+                editButton.onclick = () => editItem(item);
 
                 // Delete button
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
-                deleteButton.onclick = () => deleteItem(index);
+                deleteButton.onclick = () => deleteItem(item.prodID);
 
                 itemRow.appendChild(details);
                 itemRow.appendChild(editButton);
@@ -49,43 +54,65 @@
         }
 
         // Add new item
-        function addItem() {
+        async function addItem() {
             const name = document.getElementById("item-name").value;
             const price = parseFloat(document.getElementById("item-price").value);
             const category = document.getElementById("item-category").value;
             const image = document.getElementById("item-image").value;
 
             if (name && price && category && image) {
-                menuItems.push({ name, price, category, image });
-                saveMenuItems();
+                const formData = new FormData();
+                formData.append('action', 'add');
+                formData.append('prodName', name);
+                formData.append('prodPrice', price);
+                formData.append('prodPic', image);
+                formData.append('prodType', category);
+
+                const response = await fetch('admin_process.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                alert(result);
                 displayAdminMenu();
-                alert("Item added successfully!");
             } else {
                 alert("Please fill in all fields!");
             }
         }
 
         // Edit an item
-        function editItem(index) {
-            const item = menuItems[index];
+        async function editItem(item) {
             const newName = prompt("Enter new name:", item.name) || item.name;
             const newPrice = parseFloat(prompt("Enter new price:", item.price)) || item.price;
             const newCategory = prompt("Enter new category:", item.category) || item.category;
             const newImage = prompt("Enter new image URL:", item.image) || item.image;
 
-            menuItems[index] = { name: newName, price: newPrice, category: newCategory, image: newImage };
-            saveMenuItems();
+            const formData = new FormData();
+            formData.append('action', 'edit');
+            formData.append('prodID', item.prodID);
+            formData.append('prodName', newName);
+            formData.append('prodPrice', newPrice);
+            formData.append('prodPic', newImage);
+            formData.append('prodType', newCategory);
+
+            const response = await fetch('admin_process.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            alert(result);
             displayAdminMenu();
-            alert("Item updated successfully!");
         }
 
         // Delete an item
-        function deleteItem(index) {
+        async function deleteItem(prodID) {
             if (confirm("Are you sure you want to delete this item?")) {
-                menuItems.splice(index, 1);
-                saveMenuItems();
+                const response = await fetch(`delete_product.php?prodID=${prodID}`);
+                const result = await response.text();
+                alert(result);
                 displayAdminMenu();
-                alert("Item deleted successfully!");
             }
         }
 
@@ -103,12 +130,12 @@
                 <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
             </a>
         </div>
-    
+
         <!-- Centered Text -->
         <div id="header-center-text">
             <h1>FSKTM Kiosk</h1>
         </div>
-    
+
         <!-- Grouped Navigation Links and Dark Mode Button -->
         <div id="nav-and-dark-mode-container">
             <!-- Navigation Links -->
@@ -117,7 +144,7 @@
                 <a href="./login.html" class="nav-link">Login</a>
                 <a href="./purchase.html" class="nav-link">Purchase</a>
             </nav>
-    
+
             <!-- Dark Mode Toggle Icon -->
             <button id="dark-mode-btn">
                 <i id="dark-mode-icon" class="fas fa-moon"></i>
