@@ -81,7 +81,7 @@ main {
     align-items: center;
 }
 
-/* Profile Container */
+/* Edit Profile Container */
 .profile-container {
     background-color: white;
     padding: 40px;
@@ -103,31 +103,50 @@ main {
     }
 }
 
-/* Profile Heading */
+/* Edit Profile Heading */
 #profile-heading {
     font-size: 24px;
     color: #6d5b97; /* Muted purple */
     margin-bottom: 20px;
 }
 
-/* Profile Information */
-.profile-info {
-    text-align: left;
+/* Form Group */
+.form-group {
     margin-bottom: 20px;
+    text-align: left;
 }
 
-.profile-info p {
-    margin: 10px 0;
-    font-size: 16px;
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
     color: #4a4a4a; /* Dark gray */
 }
 
-.profile-info strong {
-    color: #6d5b97; /* Muted purple */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Edit Profile Button */
-.btn-edit {
+.form-group input:focus {
+    border-color: #8a7faf; /* Light purple border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(138, 127, 175, 0.5); /* Add a subtle shadow */
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save {
     padding: 10px 20px;
     background-color: #8a7faf; /* Light purple */
     color: white;
@@ -138,16 +157,15 @@ main {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.btn-edit:hover {
+.btn-save:hover {
     background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05);
 }
 
-/* Logout Button */
-.btn-logout {
+.btn-cancel {
     padding: 10px 20px;
-    background-color: #ff4d4d; /* Red for logout */
-    color: white;
+    background-color: #ccc; /* Gray for cancel */
+    color: #333;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -155,8 +173,8 @@ main {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.btn-logout:hover {
-    background-color: #cc0000; /* Darker red on hover */
+.btn-cancel:hover {
+    background-color: #bbb; /* Darker gray on hover */
     transform: scale(1.05);
 }
 
