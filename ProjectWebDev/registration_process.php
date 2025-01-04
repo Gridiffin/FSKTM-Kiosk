@@ -21,13 +21,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Email already exists
         $errorMessage = "This email is already registered. Please <a href='login.html'>log in</a>.";
     } else {
-        // Insert new user into the database
-        $insertQuery = "INSERT INTO member (memberName, memberEmail, memberPswd) VALUES (?, ?, ?)";
+        // Generate a 6-digit OTP
+        $otp = rand(100000, 999999);
+
+        // Store the OTP in the database temporarily
+        $insertQuery = "INSERT INTO member (memberName, memberEmail, memberPswd, otp) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insertQuery);
-        $stmt->bind_param("sss", $fullname, $email, $hashedPassword);
+        $stmt->bind_param("ssss", $fullname, $email, $hashedPassword, $otp);
 
         if ($stmt->execute()) {
-            $successMessage = "Registration successful. You can now <a href='login.html'>log in</a>.";
+            // Send OTP via email
+            $subject = "Your OTP for Registration";
+            $message = "Your OTP for registration is: $otp";
+            $headers = "From: no-reply@yourwebsite.com";
+
+            if (mail($email, $subject, $message, $headers)) {
+                $successMessage = "Registration successful. Please check your email for the OTP to verify your account.";
+            } else {
+                $errorMessage = "Error sending OTP. Please try again.";
+            }
         } else {
             $errorMessage = "Error: " . $stmt->error;
         }
@@ -92,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="success-message">
                     <?php echo $successMessage; ?>
                 </div>
+                <p>Please check your email for the OTP and <a href="verify_otp.html">click here</a> to verify your account.</p>
             <?php elseif (isset($errorMessage)): ?>
                 <div class="error-message">
                     <?php echo $errorMessage; ?>
