@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - FSKTM Kiosk</title>
+    <title>Edit Profile - FSKTM Kiosk</title>
     <link rel="stylesheet" href="./assets/css/stylesprofile.css"> <!-- Link to your CSS file -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -38,25 +38,38 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Profile Container -->
+        <!-- Edit Profile Container -->
         <div class="profile-container">
-            <h1 id="profile-heading">Your Profile</h1>
+            <h1 id="profile-heading">Edit Profile</h1>
 
             <!-- Placeholder for User Data -->
             <div id="profile-info">
                 <!-- User data will be dynamically inserted here -->
             </div>
 
+            <!-- Edit Profile Form -->
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Leave blank to keep current password">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Save Changes</button>
+                    <button type="button" class="btn-cancel" onclick="window.location.href='profile.html'">Cancel</button>
+                </div>
+            </form>
+
             <!-- Placeholder for Error Message -->
             <div id="error-message" class="error-message" style="display: none;">
                 <!-- Error messages will be dynamically inserted here -->
-            </div>
-
-            <!-- Edit Profile Button -->
-            <div class="profile-actions">
-                <button id="edit-profile-btn" class="btn-edit">Edit Profile</button>
-                <!-- Logout Button -->
-                <button id="logout-btn" class="btn-logout">Logout</button>
             </div>
         </div>
     </main>
@@ -77,11 +90,10 @@
     <script>
         // Fetch user data from profile.php
         async function fetchUserData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
+            const email = sessionStorage.getItem('email'); // Get email from sessionStorage
 
             if (!email) {
-                showError("No email provided.");
+                showError("No email provided. Please log in.");
                 return;
             }
 
@@ -101,13 +113,10 @@
             }
         }
 
-        // Display user data
+        // Display user data in the form
         function displayUserData(userData) {
-            const profileInfo = document.getElementById("profile-info");
-            profileInfo.innerHTML = `
-                <p><strong>Full Name:</strong> ${userData.memberName}</p>
-                <p><strong>Email:</strong> ${userData.memberEmail}</p>
-            `;
+            document.getElementById('name').value = userData.memberName;
+            document.getElementById('email').value = userData.memberEmail;
         }
 
         // Display error message
@@ -117,22 +126,49 @@
             errorMessageDiv.style.display = "block";
         }
 
-        // Edit Profile Button Functionality
-        document.getElementById("edit-profile-btn")?.addEventListener("click", () => {
-            const email = new URLSearchParams(window.location.search).get('email');
-            if (email) {
-                window.location.href = `edit_profile.html?email=${encodeURIComponent(email)}`;
-            } else {
-                alert("No email provided.");
-            }
-        });
+        // Handle form submission
+        document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        // Logout Button Functionality
-        document.getElementById("logout-btn")?.addEventListener("click", () => {
-            // Clear sessionStorage
-            sessionStorage.removeItem('email');
-            // Redirect to index.html
-            window.location.href = 'index.html';
+            const email = sessionStorage.getItem('email'); // Get email from sessionStorage
+
+            if (!email) {
+                showError("No email provided. Please log in.");
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+            };
+
+            try {
+                const response = await fetch(`edit_profile.php?email=${encodeURIComponent(email)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Update sessionStorage with the new email if it was changed
+                    if (data.email !== email) {
+                        sessionStorage.setItem('email', data.email);
+                    }
+
+                    alert("Profile updated successfully!");
+                    window.location.href = `profile.html`; // Redirect to profile.html
+                } else {
+                    showError(result.message || "Failed to update profile.");
+                }
+            } catch (error) {
+                showError("Failed to update profile.");
+            }
         });
 
         // Fetch user data when the page loads
