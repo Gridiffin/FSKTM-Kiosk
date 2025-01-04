@@ -18,38 +18,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Retrieve the user's hashed password from the database
-    $query = "SELECT memberPswd FROM member WHERE memberEmail = ?";
-    $stmt = $conn->prepare($query);
+    // Check if the email exists in the admin table
+    $adminQuery = "SELECT adminID, adminName, adminEmail, adminPswd FROM Admin WHERE adminEmail = ?";
+    $stmt = $conn->prepare($adminQuery);
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $adminResult = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $hashedPassword = $row['memberPswd']; // Hashed password from the database
+    if ($adminResult->num_rows > 0) {
+        // Email exists in the admin table
+        $row = $adminResult->fetch_assoc();
+        $adminPassword = $row['adminPswd']; // Plaintext password from the admin table
 
-        // Verify the password
-        if (password_verify($password, $hashedPassword)) {
-            // Password is correct
-            $_SESSION['email'] = $email; // Store user email in the session
+        // Verify the password (plaintext comparison)
+        if ($password === $adminPassword) {
+            // Password is correct (Admin)
+            $_SESSION['user_id'] = $row['adminID']; // Store admin ID in the session
+            $_SESSION['name'] = $row['adminName']; // Store admin name in the session
+            $_SESSION['email'] = $row['adminEmail']; // Store admin email in the session
+            $_SESSION['role'] = 'admin'; // Store admin role in the session
 
-            echo "Welcome back! Redirecting to your dashboard...";
+            echo "Welcome Admin! Redirecting to the admin dashboard...";
             sleep(2); // Delay for 2 seconds
-            header('Location: /index.html'); // Redirect to the dashboard
+            header('Location: /admin.html'); // Redirect to admin dashboard
             exit;
         } else {
             // Password is incorrect
-            error_log("Login failed for email: $email - Incorrect password");
+            error_log("Login failed for admin email: $email - Incorrect password");
             header('Location: /login.html?error=invalid_credentials');
             exit;
         }
-    } else {
-        // User not found
-        error_log("Login failed for email: $email - User not found");
-        header('Location: /login.html?error=invalid_credentials');
-        exit;
     }
+
+    // If not an admin, check if the email exists in the member table
+    $memberQuery = "SELECT memberID, memberName, memberEmail, memberPswd FROM member WHERE memberEmail = ?";
+    $stmt = $conn->prepare($memberQuery);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $memberResult = $stmt->get_result();
+
+    if ($memberResult->num_rows > 0) {
+        // Email exists in the member table
+        $row = $memberResult->fetch_assoc();
+        $hashedPassword = $row['memberPswd']; // Hashed password from the member table
+
+        // Verify the password (hashed comparison)
+        if (password_verify($password, $hashedPassword)) {
+            // Password is correct (Member)
+            $_SESSION['user_id'] = $row['memberID']; // Store member ID in the session
+            $_SESSION['name'] = $row['memberName']; // Store member name in the session
+            $_SESSION['email'] = $row['memberEmail']; // Store member email in the session
+            $_SESSION['role'] = 'member'; // Store member role in the session
+
+            echo "Welcome back, member! Redirecting to your dashboard...";
+            sleep(2); // Delay for 2 seconds
+            header('Location: /index.html'); // Redirect to member dashboard
+            exit;
+        } else {
+            // Password is incorrect
+            error_log("Login failed for member email: $email - Incorrect password");
+            header('Location: /login.html?error=invalid_credentials');
+            exit;
+        }
+    }
+
+    // If email is not found in either table
+    error_log("Login failed for email: $email - User not found");
+    header('Location: /login.html?error=invalid_credentials');
+    exit;
 
     // Close the database connection
     $stmt->close();
