@@ -6,6 +6,9 @@ body {
     background: #f5f3ff; /* Light purple background */
     color: #4a4a4a; /* Dark gray for text */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
 }
 
 /* Header Section */
@@ -16,71 +19,130 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Navigation Links */
-header nav a {
-    list-style: none;
+/* Logo Container */
+#logo-container {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    width: 80px;
+    height: auto;
+}
+
+/* Centered Text */
+#header-center-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#header-center-text h1 {
     margin: 0;
-    padding: 0;
-    display: flex inline;
-    gap: 15px;
+    font-size: 24px;
     color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s, transform 0.2s;
-  }
-  
-header div h1 {
+}
+
+/* Grouped Navigation Links and Dark Mode Button Container */
+#nav-and-dark-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Icon Button Styles */
+.icon-btn {
+    padding: 10px;
+    font-size: 16px;
     color: white;
-  }
-  
-header div a img {
-    width: 80px; /* Set the desired width */
-    height: auto; /* Maintain aspect ratio */
-  }
+    background-color: #8a7faf; /* Light purple */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none; /* Remove underline for the home button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+    transform: scale(1.05);
+}
 
 /* Main Content */
 main {
-    max-width: 400px;
-    margin: 30px auto;
+    flex: 1; /* Allow the main content to grow and take up remaining space */
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Registration Container */
+.registration-container {
     background-color: white;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
     text-align: left;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-label {
-    font-weight: bold;
+.form-group label {
+    display: block;
     margin-bottom: 5px;
+    font-weight: bold;
+    color: #4a4a4a; /* Dark gray */
 }
 
-input[type="text"], input[type="email"], input[type="password"], select {
+.form-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-input[type="text"]:focus, 
-input[type="email"]:focus, 
-input[type="password"]:focus, 
-select:focus {
-    border-color: #8a7faf; /* Light purple */
-    outline: none;
-    box-shadow: 0 0 5px rgba(138, 127, 175, 0.5);
+.form-group input:focus {
+    border-color: #8a7faf; /* Light purple border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(138, 127, 175, 0.5); /* Add a subtle shadow */
 }
 
-input[type="submit"] {
-    padding: 10px;
+/* Form Actions */
+.form-actions {
+    margin-top: 20px;
+}
+
+.btn-register {
+    padding: 10px 20px;
     background-color: #8a7faf; /* Light purple */
     color: white;
     border: none;
@@ -91,11 +153,44 @@ input[type="submit"] {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-input[type="submit"]:hover {
+.btn-register:hover {
     background-color: #6d5b97; /* Darker purple on hover */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active {
+.btn-register:active {
     background-color: #5a4a7f; /* Even darker purple */
+}
+
+/* Footer Section */
+footer {
+    background-color: #6d5b97; /* Muted purple */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-media {
+    display: flex;
+    gap: 10px;
+}
+
+.social-media a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-media a:hover {
+    color: #c4c1ce; /* Softer lavender for hover effect */
 }
