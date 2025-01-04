@@ -98,6 +98,26 @@
                 displayMenu(items);
             });
         });
+
+        // Handle checkout button click
+        function handleCheckout() {
+            // Check if the user is logged in by checking the session
+            fetch('/check_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        // User is logged in, redirect to checkout.html
+                        window.location.href = './checkout.html';
+                    } else {
+                        // User is not logged in, redirect to registration.html
+                        window.location.href = './registration.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session:', error);
+                    alert('An error occurred. Please try again.');
+                });
+        }
     </script>
 </head>
 <body>
@@ -153,7 +173,7 @@
         <p id="total">Total: RM0.00</p>
 
         <!-- Checkout Button -->
-        <button id="checkout-button"><a href='./checkout.html'>Checkout ></a></button>
+        <button id="checkout-button" onclick="handleCheckout()">Checkout ></button>
     </main>
 
     <!-- Footer Section -->
