@@ -57,8 +57,27 @@ function setupDarkModeToggle() {
             darkModeIcon.classList.remove("fa-sun");
             darkModeIcon.classList.add("fa-moon");
         }
+
+        // Save dark mode preference to localStorage
+        localStorage.setItem("dark-mode", isDarkMode);
     });
+
+    // Apply dark mode if previously enabled
+    const isDarkMode = localStorage.getItem("dark-mode") === "true";
+    if (isDarkMode) {
+        document.body.classList.add("dark-mode");
+        document.querySelector("header").classList.add("dark-mode");
+        document.querySelector("footer").classList.add("dark-mode");
+        document.querySelector("#hero").classList.add("dark-mode");
+        document.querySelector("#products").classList.add("dark-mode");
+        document.querySelector("#testimonials").classList.add("dark-mode");
+
+        // Set the icon to sun if dark mode is enabled
+        darkModeIcon.classList.remove("fa-moon");
+        darkModeIcon.classList.add("fa-sun");
+    }
 }
+
 
 // Initialize Functions
 document.addEventListener("DOMContentLoaded", () => {
