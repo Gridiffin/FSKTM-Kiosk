@@ -7,7 +7,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 
 if ($email) {
     // Fetch admin data from the database
-    $query = "SELECT adminID, adminName, adminEmail, role FROM admin WHERE adminEmail = ?";
+    $query = "SELECT adminID, adminName, adminEmail FROM Admin WHERE adminEmail = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -21,7 +21,7 @@ if ($email) {
 
     $stmt->close();
 } else {
-    $errorMessage = "No email provided.";
+    $errorMessage = "No email provided in session.";
 }
 
 $conn->close();

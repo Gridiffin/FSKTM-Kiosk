@@ -8,9 +8,11 @@ if (!isset($_SESSION['cart'])) {
 
 // Handle adding items to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $itemId = $_POST['item_id'];
-    $itemName = $_POST['item_name'];
-    $itemPrice = $_POST['item_price'];
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    $itemId = $data['item_id'];
+    $itemName = $data['item_name'];
+    $itemPrice = $data['item_price'];
 
     // Check if the item already exists in the cart
     $itemExists = false;
@@ -33,6 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Send a success response
-    echo "Item added to cart!";
+    echo json_encode(['status' => 'success', 'message' => 'Item added to cart!']);
 }
 ?>

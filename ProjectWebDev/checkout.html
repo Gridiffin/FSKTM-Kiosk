@@ -94,36 +94,51 @@
 
     <!-- JavaScript -->
     <script>
-        // Retrieve cart data from localStorage
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Function to render receipt items
-        function renderReceipt() {
-            const purchasedItems = document.getElementById("purchased-items");
-            const totalValue = document.getElementById("total-value");
-            let totalPrice = 0;
-
-            // Clear existing items
-            purchasedItems.innerHTML = "";
-
-            // Render each cart item
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalPrice += itemTotal;
-
-                const itemElement = document.createElement("li");
-                itemElement.innerHTML = `
-                    ${item.name} - RM${item.price.toFixed(2)} x ${item.quantity} = RM${itemTotal.toFixed(2)}
-                `;
-                purchasedItems.appendChild(itemElement);
-            });
-
-            // Update total price
-            totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
+        // Retrieve cart data from the server
+async function fetchCart() {
+    try {
+        const response = await fetch('cart_section.php?action=fetch');
+        if (!response.ok) {
+            throw new Error('Failed to fetch cart data');
         }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching cart data:', error);
+        return [];
+    }
+}
 
-        // Initial render
-        renderReceipt();
+// Function to render receipt items
+async function renderReceipt() {
+    const purchasedItems = document.getElementById("purchased-items");
+    const totalValue = document.getElementById("total-value");
+    let totalPrice = 0;
+
+    // Clear existing items
+    purchasedItems.innerHTML = "";
+
+    // Fetch cart data from the server
+    const cart = await fetchCart();
+
+    // Render each cart item
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+
+        const itemElement = document.createElement("li");
+        itemElement.innerHTML = `
+            ${item.name} - RM${item.price.toFixed(2)} x ${item.quantity} = RM${itemTotal.toFixed(2)}
+        `;
+        purchasedItems.appendChild(itemElement);
+    });
+
+    // Update total price
+    totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
+}
+
+// Initial render
+renderReceipt();
     </script>
 </body>
 </html>

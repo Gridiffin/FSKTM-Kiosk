@@ -77,16 +77,15 @@
     <script>
         // Fetch user data from profile.php
         async function fetchUserData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
+            const email = sessionStorage.getItem('email'); // Get email from sessionStorage
 
             if (!email) {
-                showError("No email provided.");
+                showError("No email provided. Please log in.");
                 return;
             }
 
             try {
-                const response = await fetch(`profile.php?email=${encodeURIComponent(email)}`);
+                const response = await fetch(`php/profile.php?email=${encodeURIComponent(email)}`);
                 const data = await response.json();
 
                 if (data.errorMessage) {
@@ -119,11 +118,11 @@
 
         // Edit Profile Button Functionality
         document.getElementById("edit-profile-btn")?.addEventListener("click", () => {
-            const email = new URLSearchParams(window.location.search).get('email');
+            const email = sessionStorage.getItem('email');
             if (email) {
-                window.location.href = `edit_profile.html?email=${encodeURIComponent(email)}`;
+                window.location.href = `edit_profile.html`;
             } else {
-                alert("No email provided.");
+                alert("No email provided. Please log in.");
             }
         });
 

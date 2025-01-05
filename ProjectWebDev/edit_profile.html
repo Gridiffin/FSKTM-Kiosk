@@ -98,7 +98,7 @@
             }
 
             try {
-                const response = await fetch(`profile.php?email=${encodeURIComponent(email)}`);
+                const response = await fetch(`php/profile.php?email=${encodeURIComponent(email)}`);
                 const data = await response.json();
 
                 if (data.errorMessage) {
@@ -145,7 +145,7 @@
             };
 
             try {
-                const response = await fetch(`edit_profile.php?email=${encodeURIComponent(email)}`, {
+                const response = await fetch(`php/edit_profile.php?email=${encodeURIComponent(email)}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

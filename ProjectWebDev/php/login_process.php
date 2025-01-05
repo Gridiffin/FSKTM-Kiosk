@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Password is correct (Admin)
             $_SESSION['email'] = $row['adminEmail']; // Store admin email in the session
             $_SESSION['role'] = 'admin'; // Store admin role in the session
+            $_SESSION['adminID'] = $row['adminID']; // Store admin ID in the session
 
             echo "Welcome Admin! Redirecting to the admin dashboard...";
             sleep(2); // Delay for 2 seconds
