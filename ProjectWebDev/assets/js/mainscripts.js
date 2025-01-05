@@ -39,16 +39,45 @@ function enableSmoothScrolling() {
 // Dark Mode Toggle
 function setupDarkModeToggle() {
     const darkModeBtn = document.getElementById("dark-mode-btn");
+    const darkModeIcon = document.getElementById("dark-mode-icon");
 
     darkModeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
+        const isDarkMode = document.body.classList.toggle("dark-mode");
         document.querySelector("header").classList.toggle("dark-mode");
         document.querySelector("footer").classList.toggle("dark-mode");
         document.querySelector("#hero").classList.toggle("dark-mode");
         document.querySelector("#products").classList.toggle("dark-mode");
         document.querySelector("#testimonials").classList.toggle("dark-mode");
+
+        // Toggle between sun and moon icons
+        if (isDarkMode) {
+            darkModeIcon.classList.remove("fa-moon");
+            darkModeIcon.classList.add("fa-sun");
+        } else {
+            darkModeIcon.classList.remove("fa-sun");
+            darkModeIcon.classList.add("fa-moon");
+        }
+
+        // Save dark mode preference to localStorage
+        localStorage.setItem("dark-mode", isDarkMode);
     });
+
+    // Apply dark mode if previously enabled
+    const isDarkMode = localStorage.getItem("dark-mode") === "true";
+    if (isDarkMode) {
+        document.body.classList.add("dark-mode");
+        document.querySelector("header").classList.add("dark-mode");
+        document.querySelector("footer").classList.add("dark-mode");
+        document.querySelector("#hero").classList.add("dark-mode");
+        document.querySelector("#products").classList.add("dark-mode");
+        document.querySelector("#testimonials").classList.add("dark-mode");
+
+        // Set the icon to sun if dark mode is enabled
+        darkModeIcon.classList.remove("fa-moon");
+        darkModeIcon.classList.add("fa-sun");
+    }
 }
+
 
 // Initialize Functions
 document.addEventListener("DOMContentLoaded", () => {

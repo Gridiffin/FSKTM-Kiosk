@@ -7,6 +7,37 @@ body {
   color: #4a4a4a; /* Dark gray for text */
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+  background: #2a2a2a; /* Soft gray background */
+  color: #e0e0e0; /* Light gray text */
+}
+
+header.dark-mode {
+  background-color: #333333; /* Slightly darker gray */
+  color: #e0e0e0;
+}
+
+main.dark-mode {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.dark-mode .item-row {
+  background-color: #6d5b97; /* Muted purple for cards */
+  color: #ffffff; /* White text */
+  border-color: #8a7faf; /* Light purple border */
+}
+
+.dark-mode button {
+  background-color: #8a7faf; /* Light purple */
+  color: white;
+}
+
+.dark-mode button:hover {
+  background-color: #6d5b97; /* Darker purple on hover */
+}
+
 /* Header Section */
 header {
   background-color: #6d5b97; /* Muted purple */
@@ -44,42 +75,50 @@ header {
   color: white;
 }
 
-/* Navigation Links */
-#nav-links {
+/* Grouped Navigation Links and Dark Mode Button Container */
+#nav-and-dark-mode-container {
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 10px; /* Space between buttons */
 }
 
-.nav-link {
-  text-decoration: none;
+/* Icon Button Styles */
+.icon-btn {
+  padding: 10px;
   font-size: 16px;
-  color: white;
-  font-weight: bold;
-  transition: color 0.3s, transform 0.2s;
-}
-
-.nav-link:hover {
-  color: #c4c1ce; /* Softer lavender for hover effect */
-  transform: scale(1.1);
-}
-
-/* Dark Mode Button */
-#dark-mode-btn {
-  padding: 10px 15px;
-  font-size: 14px;
   color: white;
   background-color: #8a7faf; /* Light purple */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
+  text-decoration: none; /* Remove underline for the home button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#dark-mode-btn:hover {
+.icon-btn:hover {
   background-color: #6d5b97; /* Darker purple on hover */
   transform: scale(1.05);
 }
+
+/* Dark Mode Button */
+#dark-mode-btn {
+  padding: 10px;
+}
+
+/* Profile Button */
+#profile-btn {
+  padding: 10px;
+  margin-top: 8px; /* Move the profile button slightly downward */
+}
+
+/* Logout Button */
+#logout-btn {
+  padding: 10px;
+}
+
 /* Main Content */
 main {
   padding: 20px;
@@ -87,6 +126,27 @@ main {
 
 h1, h2 {
   color: #6d5b97; /* Muted purple */
+}
+
+/* View Payments Button */
+#view-payments-link {
+  margin-bottom: 20px;
+}
+
+.payments-btn {
+  padding: 10px 20px;
+  background-color: #8a7faf; /* Light purple */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.payments-btn:hover {
+  background-color: #6d5b97; /* Darker purple on hover */
+  transform: scale(1.05);
 }
 
 /* Add Item Form */

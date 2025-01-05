@@ -1,21 +1,32 @@
-// checkout.js
-
 document.addEventListener("DOMContentLoaded", () => {
     // Dark Mode Toggle
     const darkModeBtn = document.getElementById("dark-mode-btn");
-    if (darkModeBtn) {
+    const darkModeIcon = document.getElementById("dark-mode-icon");
+
+    if (darkModeBtn && darkModeIcon) {
+        // Function to apply dark mode
+        const applyDarkMode = (isDarkMode) => {
+            document.body.classList.toggle("dark-mode", isDarkMode);
+            document.querySelector("header").classList.toggle("dark-mode", isDarkMode);
+            document.querySelector("footer").classList.toggle("dark-mode", isDarkMode);
+
+            // Toggle between sun and moon icons
+            darkModeIcon.classList.toggle("fa-moon", !isDarkMode);
+            darkModeIcon.classList.toggle("fa-sun", isDarkMode);
+        };
+
+        // Toggle dark mode on button click
         darkModeBtn.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
+            const isDarkMode = !document.body.classList.contains("dark-mode");
+            applyDarkMode(isDarkMode);
+
             // Save dark mode preference to localStorage
-            const isDarkMode = document.body.classList.contains("dark-mode");
             localStorage.setItem("dark-mode", isDarkMode);
         });
 
-        // Apply dark mode if previously enabled
+        // Apply dark mode on page load
         const isDarkMode = localStorage.getItem("dark-mode") === "true";
-        if (isDarkMode) {
-            document.body.classList.add("dark-mode");
-        }
+        applyDarkMode(isDarkMode);
     }
 
     // Populate receipt with cart items and total

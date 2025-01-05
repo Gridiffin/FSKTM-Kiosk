@@ -28,7 +28,7 @@
         // Fetch menu items from the database
         async function fetchMenuItems() {
             try {
-                const response = await fetch('fetch_product.php');
+                const response = await fetch('php/fetch_product.php');
                 if (!response.ok) {
                     throw new Error('Failed to fetch products');
                 }
@@ -41,23 +41,30 @@
             }
         }
 
-        // Add item to cart
+       // Add item to cart
         function addToCart(itemId, name, price) {
-            // Check if the item already exists in the cart
-            const existingItem = cart.find(item => item.id === itemId);
-            if (existingItem) {
-                existingItem.quantity += 1; // Increase quantity if item exists
-            } else {
-                // Add new item to the cart
-                cart.push({ id: itemId, name: name, price: price, quantity: 1 });
+        fetch('add_to_cart.php', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                item_id: itemId,
+                item_name: name,
+                item_price: price,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                showNotification("Product has been added to the cart!");
+                // Optionally, you can update the cart display here
             }
-
-            // Save the updated cart to localStorage
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-            // Show notification
-            showNotification("Product has been added to the cart!");
-        }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
         // Function to show a notification
         function showNotification(message) {
@@ -213,7 +220,7 @@
     <!-- Footer Section -->
     <footer id="footer">
         <div class="footer-content">
-            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a>Contact Us</a></p>
             <div class="social-media">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>

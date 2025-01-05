@@ -221,3 +221,41 @@ footer {
 .social-media a:hover {
     color: #c4c1ce; /* Softer lavender for hover effect */
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: #2a2a2a; /* Soft gray background */
+    color: #e0e0e0; /* Light gray text */
+}
+
+header.dark-mode, footer.dark-mode {
+    background-color: #333333; /* Slightly darker gray */
+    color: #e0e0e0;
+}
+
+.dark-mode .menu-item {
+    background-color: #6d5b97; /* Muted purple for cards */
+    color: #ffffff; /* White text */
+}
+
+.dark-mode .menu-item button {
+    background-color: #8a7faf; /* Light purple */
+    color: white;
+}
+
+.dark-mode .menu-item button:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+}
+
+.dark-mode #total {
+    color: #8a7faf; /* Light purple for total text */
+}
+
+.dark-mode #checkout-button {
+    background-color: #8a7faf; /* Light purple */
+    color: white;
+}
+
+.dark-mode #checkout-button:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+}

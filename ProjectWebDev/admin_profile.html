@@ -57,7 +57,7 @@
     <!-- Footer Section -->
     <footer id="footer">
         <div class="footer-content">
-            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a>Contact Us</a></p>
             <div class="social-media">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -70,27 +70,31 @@
     <script>
         // Fetch admin data from admin_profile.php
         async function fetchAdminData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
-
-            if (!email) {
-                showError("No email provided.");
-                return;
-            }
-
             try {
-                const response = await fetch(`admin_profile.php?email=${encodeURIComponent(email)}`);
-                const data = await response.json();
+                // Fetch the session email from the server
+                const sessionResponse = await fetch('php/get_session_email.php');
+                const sessionData = await sessionResponse.json();
 
-                if (data.errorMessage) {
-                    showError(data.errorMessage);
-                } else if (data.adminData) {
-                    displayAdminData(data.adminData);
+                if (sessionData.errorMessage) {
+                    showError(sessionData.errorMessage);
+                } else if (sessionData.email) {
+                    // Use the session email to fetch admin data
+                    const adminResponse = await fetch(`admin_profile.php?email=${encodeURIComponent(sessionData.email)}`);
+                    const adminData = await adminResponse.json();
+
+                    if (adminData.errorMessage) {
+                        showError(adminData.errorMessage);
+                    } else if (adminData.adminData) {
+                        displayAdminData(adminData.adminData);
+                    } else {
+                        showError("No admin data found.");
+                    }
                 } else {
-                    showError("No admin data found.");
+                    showError("No email provided in session.");
                 }
             } catch (error) {
                 showError("Failed to fetch admin data.");
+                console.error("Error fetching admin data:", error);
             }
         }
 
@@ -101,7 +105,6 @@
                 <p><strong>Admin ID:</strong> ${adminData.adminID}</p>
                 <p><strong>Full Name:</strong> ${adminData.adminName}</p>
                 <p><strong>Email:</strong> ${adminData.adminEmail}</p>
-                <p><strong>Role:</strong> ${adminData.role}</p>
             `;
         }
 

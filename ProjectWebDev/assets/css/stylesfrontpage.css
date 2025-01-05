@@ -304,42 +304,102 @@ footer {
 
 /* Dark Mode Styles */
 body.dark-mode {
-    background: #333;
-    color: white;
+    background: #2a2a2a; /* Soft gray background */
+    color: #e0e0e0; /* Light gray text for better readability */
 }
 
 header.dark-mode, footer.dark-mode {
-    background-color: #444;
+    background-color: #333333; /* Slightly darker gray for header/footer */
+    color: #e0e0e0; /* Light gray text */
 }
 
 #hero.dark-mode {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./assets/images/hero-bg.jpg');
-    color: white;
+    background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.5)), url('../images/hero-bg.jpg');
+    color: #e0e0e0; /* Light gray text */
 }
 
 #products.dark-mode {
-    background-color: #444;
-    color: white;
+    background-color: #333333; /* Slightly darker gray for products section */
+    color: #e0e0e0; /* Light gray text */
+}
+
+#products.dark-mode .product {
+    background-color: #6d5b97; /* Muted purple for card background */
+    color: #ffffff; /* White text for better contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 #products.dark-mode .product i {
-    color: #c4c1ce;
+    color: #ffffff; /* White icons for better contrast */
+}
+
+#products.dark-mode .product h3 {
+    color: #ffffff; /* White text for product titles */
 }
 
 #products.dark-mode .product p {
-    color: #c4c1ce;
+    color: #e0e0e0; /* Light gray for product descriptions */
 }
 
 #testimonials.dark-mode {
-    background-color: #555;
-    color: white;
+    background-color: #333333; /* Slightly darker gray for testimonials section */
+    color: #e0e0e0; /* Light gray text */
 }
 
 #testimonials.dark-mode .testimonial {
-    background-color: #444;
-    color: white;
+    background-color: #6d5b97; /* Muted purple for testimonial cards */
+    color: #ffffff; /* White text for testimonials */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+#testimonials.dark-mode .testimonial p {
+    color: #ffffff; /* White text for testimonial content */
 }
 
 #testimonials.dark-mode .testimonial span {
-    color: #c4c1ce;
+    color: #e0e0e0; /* Light gray for testimonial author names */
+}
+
+/* Section Dividers with Shadowy Box Effect */
+section {
+    padding: 40px 20px; /* Add padding to sections */
+    margin: 20px 0; /* Add margin to create space between sections */
+    background-color: #333333; /* Slightly darker gray for section background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for separation */
+}
+
+#hero {
+    background-color: transparent; /* No background for hero section */
+    box-shadow: none; /* No shadow for hero section */
+    margin: 0; /* No margin for hero section */
+}
+
+/* Ensure links are visible in dark mode */
+.dark-mode a {
+    color: #00bcd4; /* Teal for links (accent color) */
+}
+
+.dark-mode a:hover {
+    color: #ffffff; /* White for hovered links */
+}
+
+/* Ensure buttons are visible in dark mode */
+.dark-mode .hero-btn {
+    background-color: #8a7faf; /* Teal for buttons (accent color) */
+    color: #ffffff; /* Dark text for contrast */
+}
+
+.dark-mode .hero-btn:hover {
+    background-color: #6d5b97; /* Darker teal for hovered buttons */
+}
+
+#dark-mode-btn .fa-sun {
+    color: #ffd700; /* Yellow color for the sun icon */
+}
+
+#dark-mode-btn .fa-moon {
+    color: #ffffff; /* White color for the moon icon */
 }

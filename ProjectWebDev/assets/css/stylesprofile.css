@@ -72,6 +72,39 @@ header {
     transform: scale(1.05);
 }
 
+/* Dark Mode Styles */
+body.dark-mode {
+    background: #2a2a2a; /* Soft gray background */
+    color: #e0e0e0; /* Light gray text */
+}
+
+header.dark-mode, footer.dark-mode {
+    background-color: #333333; /* Slightly darker gray */
+    color: #e0e0e0;
+}
+
+.dark-mode .profile-container {
+    background-color: #333333; /* Dark gray for container */
+    color: #e0e0e0;
+}
+
+.dark-mode .btn-edit {
+    background-color: #8a7faf; /* Light purple */
+    color: white;
+}
+
+.dark-mode .btn-edit:hover {
+    background-color: #6d5b97; /* Darker purple on hover */
+}
+
+.dark-mode .btn-logout {
+    background-color: #ff4d4d; /* Red for logout */
+    color: white;
+}
+
+.dark-mode .btn-logout:hover {
+    background-color: #cc0000; /* Darker red on hover */
+}
 /* Main Content */
 main {
     flex: 1; /* Allow the main content to grow and take up remaining space */

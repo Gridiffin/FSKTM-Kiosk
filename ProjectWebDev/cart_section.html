@@ -68,7 +68,7 @@
     <!-- Footer Section -->
     <footer id="footer">
         <div class="footer-content">
-            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a>Contact Us</a></p>
             <div class="social-media">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
@@ -79,81 +79,115 @@
 
     <!-- JavaScript for Cart Functionality -->
     <script>
-        // Retrieve cart data from localStorage
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Function to render cart items
-        function renderCart() {
-            const cartItems = document.getElementById("cart-items");
-            const totalValue = document.getElementById("total-value");
-            let totalPrice = 0;
-
-            // Clear existing cart items
-            cartItems.innerHTML = "";
-
-            // Render each cart item
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalPrice += itemTotal;
-
-                const itemElement = document.createElement("div");
-                itemElement.className = "cart-item";
-                itemElement.innerHTML = `
-                    <div class="item-info">
-                        <p class="item-name">${item.name}</p>
-                        <p class="item-price">RM${item.price.toFixed(2)}</p>
-                    </div>
-                    <div class="item-quantity">
-                        <button class="btn-quantity" onclick="updateQuantity(${item.id}, -1)">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <span class="quantity">${item.quantity}</span>
-                        <button class="btn-quantity" onclick="updateQuantity(${item.id}, 1)">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="item-total">
-                        <p>RM${itemTotal.toFixed(2)}</p>
-                    </div>
-                    <div class="item-actions">
-                        <button class="btn-remove" onclick="removeItem(${item.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                cartItems.appendChild(itemElement);
-            });
-
-            // Update total price
-            totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
+        // Fetch cart data from the server
+async function fetchCart() {
+    try {
+        const response = await fetch('cart_section.php?action=fetch');
+        if (!response.ok) {
+            throw new Error('Failed to fetch cart data');
         }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching cart data:', error);
+        return [];
+    }
+}
 
-        // Function to update item quantity
-        function updateQuantity(itemId, change) {
-            const item = cart.find(i => i.id === itemId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity < 1) item.quantity = 1; // Ensure quantity doesn't go below 1
-                localStorage.setItem("cart", JSON.stringify(cart)); // Save updated cart to localStorage
-                renderCart();
-            }
-        }
+// Function to render cart items
+async function renderCart() {
+    const cartItems = document.getElementById("cart-items");
+    const totalValue = document.getElementById("total-value");
+    let totalPrice = 0;
 
-        // Function to remove an item from the cart
-        function removeItem(itemId) {
-            cart = cart.filter(i => i.id !== itemId);
-            localStorage.setItem("cart", JSON.stringify(cart)); // Save updated cart to localStorage
-            renderCart();
-        }
+    // Clear existing cart items
+    cartItems.innerHTML = "";
 
-        // Function to proceed to checkout
-        function proceedToCheckout() {
-            // Save the cart data to localStorage before redirecting
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
+    // Fetch cart data from the server
+    const cart = await fetchCart();
 
-        // Initial render
+    // Render each cart item
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+
+        const itemElement = document.createElement("div");
+        itemElement.className = "cart-item";
+        itemElement.innerHTML = `
+            <div class="item-info">
+                <p class="item-name">${item.name}</p>
+                <p class="item-price">RM${item.price.toFixed(2)}</p>
+            </div>
+            <div class="item-quantity">
+                <button class="btn-quantity" onclick="updateQuantity(${item.id}, -1)">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="btn-quantity" onclick="updateQuantity(${item.id}, 1)">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="item-total">
+                <p>RM${itemTotal.toFixed(2)}</p>
+            </div>
+            <div class="item-actions">
+                <button class="btn-remove" onclick="removeItem(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+        cartItems.appendChild(itemElement);
+    });
+
+    // Update total price
+    totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
+}
+
+// Function to update item quantity
+async function updateQuantity(itemId, change) {
+    const response = await fetch('cart_section.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'update',
+            item_id: itemId,
+            quantity: change,
+        }),
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
         renderCart();
+    }
+}
+
+// Function to remove an item from the cart
+async function removeItem(itemId) {
+    const response = await fetch('cart_section.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'remove',
+            item_id: itemId,
+        }),
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+        renderCart();
+    }
+}
+
+function proceedToCheckout() {
+    // Save cart data to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+    // Redirect to checkout page
+    window.location.href = "./checkout.html";
+}
+// Initial render
+renderCart();
     </script>
 </body>
 </html>
