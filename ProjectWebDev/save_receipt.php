@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    "Change: {$receipt['change']}\n";
 
     header('Content-Type: text/plain');
-    header("Content-Disposition: attachment; filename=receipt_{$receipt['receiptID']}.txt");
+    header("Content-Disposition: attachment; filename=receipt_{$receipt['receiptID']}.pdf");
     echo $receiptText;
     exit;
 }
