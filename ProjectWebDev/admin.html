@@ -127,6 +127,14 @@
         document.addEventListener("DOMContentLoaded", () => {
             displayAdminMenu();
         });
+
+        // Logout Button Functionality
+        document.getElementById("logout-btn")?.addEventListener("click", () => {
+            // Clear sessionStorage
+            sessionStorage.removeItem('email');
+            // Redirect to index.html
+            window.location.href = 'index.html';
+        });
     </script>
 </head>
 <body>
@@ -147,9 +155,9 @@
         <div id="nav-and-dark-mode-container">
             <!-- Navigation Links -->
             <nav id="nav-links">
-                <a href="./index.html" class="nav-link">Home</a>
-                <a href="./login.html" class="nav-link">Login</a>
-                <a href="./purchase.html" class="nav-link">Purchase</a>
+                <a href="./admin_profile.html" class="nav-link">Profile</a>
+                <a href="./admin_payment.html" class="nav-link">View Payments</a>
+                <button id="logout-btn" class="nav-link">Logout</button>
             </nav>
 
             <!-- Dark Mode Toggle Icon -->
@@ -161,9 +169,6 @@
 
     <main>
         <h1>Admin Page</h1>
-        <nav id="nav-link">
-            <a href="./payments.html" class="nav-link">View Payments</a>
-        </nav>
         <!-- Add Item Form -->
         <section>
             <h2>Add New Item</h2>

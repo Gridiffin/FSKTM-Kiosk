@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile - FSKTM Kiosk</title>
+    <link rel="stylesheet" href="./assets/css/stylesprofile.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Logo Container -->
+        <div id="logo-container">
+            <a href="./index.html" id="logo-link">
+                <img src="./assets/images/fsktm_logo.png" alt="Website Logo" id="logo">
+            </a>
+        </div>
+
+        <!-- Centered Text -->
+        <div id="header-center-text">
+            <h1>FSKTM Kiosk</h1>
+        </div>
+
+        <!-- Grouped Navigation Links and Dark Mode Button -->
+        <div id="nav-and-dark-mode-container">
+            <!-- Navigation Links -->
+            <nav id="nav-links">
+                <a href="./admin.html" class="nav-link">Admin</a>
+                <a href="./admin_payment.html" class="nav-link">View Payments</a>
+                <button id="logout-btn" class="nav-link">Logout</button>
+            </nav>
+
+            <!-- Dark Mode Toggle Icon -->
+            <button id="dark-mode-btn">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Profile Container -->
+        <div class="profile-container">
+            <h1 id="profile-heading">Admin Profile</h1>
+
+            <!-- Placeholder for User Data -->
+            <div id="profile-info">
+                <!-- Admin data will be dynamically inserted here -->
+            </div>
+
+            <!-- Placeholder for Error Message -->
+            <div id="error-message" class="error-message" style="display: none;">
+                <!-- Error messages will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FSKTM Kiosk. All Rights Reserved. | <a href="./contact.html">Contact Us</a></p>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Fetch admin data from admin_profile.php
+        async function fetchAdminData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+
+            if (!email) {
+                showError("No email provided.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`admin_profile.php?email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+
+                if (data.errorMessage) {
+                    showError(data.errorMessage);
+                } else if (data.adminData) {
+                    displayAdminData(data.adminData);
+                } else {
+                    showError("No admin data found.");
+                }
+            } catch (error) {
+                showError("Failed to fetch admin data.");
+            }
+        }
+
+        // Display admin data
+        function displayAdminData(adminData) {
+            const profileInfo = document.getElementById("profile-info");
+            profileInfo.innerHTML = `
+                <p><strong>Admin ID:</strong> ${adminData.adminID}</p>
+                <p><strong>Full Name:</strong> ${adminData.adminName}</p>
+                <p><strong>Email:</strong> ${adminData.adminEmail}</p>
+                <p><strong>Role:</strong> ${adminData.role}</p>
+            `;
+        }
+
+        // Display error message
+        function showError(message) {
+            const errorMessageDiv = document.getElementById("error-message");
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = "block";
+        }
+
+        // Logout Button Functionality
+        document.getElementById("logout-btn")?.addEventListener("click", () => {
+            // Clear sessionStorage
+            sessionStorage.removeItem('email');
+            // Redirect to index.html
+            window.location.href = 'index.html';
+        });
+
+        // Fetch admin data when the page loads
+        fetchAdminData();
+    </script>
+</body>
+</html>
