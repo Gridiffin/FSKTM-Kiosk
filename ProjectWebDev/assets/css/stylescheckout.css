@@ -402,3 +402,65 @@ body.dark-mode .modal-content h3 {
 body.dark-mode .modal-content p {
     color: #f5f3ff;
 }
+
+/* Cart Items Styling */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.item-info, .item-quantity, .item-total, .item-actions {
+    flex: 1;
+    text-align: center;
+}
+
+.item-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-quantity {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #6d5b97;
+    transition: color 0.3s;
+}
+
+.btn-quantity:hover {
+    color: #8a7faf;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff4d4d;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.btn-remove:hover {
+    color: #cc0000;
+}
+
+/* Cart Actions Styling */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-login {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

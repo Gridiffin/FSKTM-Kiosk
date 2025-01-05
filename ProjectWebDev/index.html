@@ -27,7 +27,7 @@
             <!-- Navigation Links -->
             <nav id="nav-links">
                 <a href="./login.html" class="nav-link" id="login-link">Login</a>
-                <a href="./registration.html" class="nav-link">Register</a>
+                <a href="./registration.html" class="nav-link" id="register-link">Register</a>
             </nav>
 
             <!-- Dark Mode Toggle Icon -->
@@ -97,25 +97,6 @@
 
     <!-- JavaScript -->
     <script src="./assets/js/mainscripts.js"></script>
-    <script>
-        // Function to check login status
-        function checkLoginStatus() {
-            const email = sessionStorage.getItem('email'); // Get email from sessionStorage
-            const loginLink = document.getElementById('login-link');
-
-            if (email) {
-                // User is logged in
-                loginLink.textContent = 'Profile'; // Change "Login" to "Profile"
-                loginLink.href = 'profile.html?email=' + encodeURIComponent(email);
-            } else {
-                // User is not logged in
-                loginLink.textContent = 'Login'; // Keep "Login" as is
-                loginLink.href = 'login.html'; // Set the link to the login page
-            }
-        }
-
-        // Run the check when the page loads
-        checkLoginStatus();
-    </script>
+    <script src="./assets/js/auth.js"></script> <!-- Link to the external auth.js file -->
 </body>
 </html>
