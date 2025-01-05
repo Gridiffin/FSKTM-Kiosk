@@ -11,7 +11,7 @@
         // Fetch products from the database
         async function fetchProducts() {
             try {
-                const response = await fetch('fetch_product.php');
+                const response = await fetch('php/fetch_product.php');
                 if (!response.ok) {
                     throw new Error('Failed to fetch products');
                 }
@@ -71,7 +71,7 @@
                 formData.append('prodType', category);
                 formData.append('prodPic', imageFile); // Append the file
 
-                const response = await fetch('admin_process.php', {
+                const response = await fetch('php/admin_process.php', {
                     method: 'POST',
                     body: formData // Send FormData directly
                 });
@@ -104,7 +104,7 @@
                 formData.append('prodPic', item.image); // Keep the existing image
             }
 
-            const response = await fetch('admin_process.php', {
+            const response = await fetch('php/admin_process.php', {
                 method: 'POST',
                 body: formData
             });
