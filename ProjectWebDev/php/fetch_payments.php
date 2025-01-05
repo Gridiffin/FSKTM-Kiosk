@@ -13,6 +13,8 @@ if ($result) {
     }
     echo json_encode($payments); // Return payment data as JSON
 } else {
+    // Log the error for debugging
+    error_log("Error fetching payments: " . $conn->error);
     echo json_encode([]); // Return an empty array if no data is found
 }
 

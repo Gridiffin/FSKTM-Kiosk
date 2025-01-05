@@ -5,15 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Payments - Admin</title>
     <link rel="stylesheet" href="./assets/css/stylesadmin.css">
+    <!-- Add Chart.js for bar chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* CSS for the payment table */
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .payments-table th, .payments-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .payments-table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .payments-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .payments-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* CSS for the bar chart container */
+        #bar-chart-container {
+            margin-top: 40px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* CSS for the date filter */
+        #date-filter {
+            margin-bottom: 20px;
+        }
+        #date-filter label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        #date-filter input {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
     <script>
         // Fetch payment data from the database
-        async function fetchPayments() {
+        async function fetchPayments(dateFilter = null) {
             try {
-                const response = await fetch('fetch_payments.php');
+                let url = 'php/fetch_payments.php';
+                if (dateFilter) {
+                    url += `?date=${dateFilter}`;
+                }
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Failed to fetch payments');
                 }
                 const data = await response.json();
+                console.log("Fetched data:", data); // Debugging line
                 return data;
             } catch (error) {
                 console.error('Error fetching payments:', error);
@@ -21,12 +73,12 @@
             }
         }
 
-        // Display payment data in the admin panel
-        async function displayPayments() {
+        // Display payment data in a table
+        async function displayPayments(dateFilter = null) {
             const paymentsContainer = document.getElementById("payments-container");
             paymentsContainer.innerHTML = ""; // Clear existing content
 
-            const payments = await fetchPayments();
+            const payments = await fetchPayments(dateFilter);
             console.log("Fetched payments:", payments); // Debugging line
 
             if (payments.length === 0) {
@@ -40,7 +92,7 @@
 
             // Table header
             const headerRow = document.createElement("tr");
-            const headers = ["Payment ID", "Member ID", "Product ID", "Product Name", "Amount", "Price", "Total Payment", "Status"];
+            const headers = ["Payment ID", "Member ID", "Product ID", "Product Name", "Amount", "Price", "Total Payment", "Status", "Date"];
             headers.forEach(headerText => {
                 const header = document.createElement("th");
                 header.textContent = headerText;
@@ -60,7 +112,8 @@
                     payment.amount,
                     `RM${payment.prodPrice.toFixed(2)}`,
                     `RM${payment.totalPay.toFixed(2)}`,
-                    payment.status
+                    payment.status === 1 ? "Completed" : "Pending",
+                    payment.date
                 ];
 
                 columns.forEach(columnText => {
@@ -73,6 +126,60 @@
             });
 
             paymentsContainer.appendChild(table);
+
+            // Update the bar chart
+            updateBarChart(payments);
+        }
+
+        // Update the bar chart with payment data
+        function updateBarChart(payments) {
+            const ctx = document.getElementById('payment-bar-chart').getContext('2d');
+
+            // Group payments by date and calculate total payments per date
+            const paymentData = payments.reduce((acc, payment) => {
+                const date = payment.date;
+                if (!acc[date]) {
+                    acc[date] = 0;
+                }
+                acc[date] += payment.totalPay;
+                return acc;
+            }, {});
+
+            const labels = Object.keys(paymentData);
+            const data = Object.values(paymentData);
+
+            // Destroy existing chart if it exists
+            if (window.paymentChart) {
+                window.paymentChart.destroy();
+            }
+
+            // Create new bar chart
+            window.paymentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Payments (RM)',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Filter payments by date
+        function filterPaymentsByDate() {
+            const dateFilter = document.getElementById("date-filter-input").value;
+            displayPayments(dateFilter);
         }
 
         // Load payment data on page load
@@ -98,7 +205,6 @@
         <!-- Grouped Navigation Links and Dark Mode Button -->
         <div id="nav-and-dark-mode-container">
             <!-- Navigation Links -->
-            <!-- Replace the existing <nav id="nav-links"> section with this: -->
             <nav id="nav-links">
                 <a href="./admin.html" class="nav-link">Admin</a>
                 <a href="./admin_profile.html" class="nav-link">Profile</a>
@@ -114,10 +220,25 @@
 
     <main>
         <h1>View Payments</h1>
+        <!-- Date Filter -->
+        <div id="date-filter">
+            <label for="date-filter-input">Filter by Date:</label>
+            <input type="date" id="date-filter-input" onchange="filterPaymentsByDate()">
+        </div>
+
+        <!-- Payment Table Section -->
         <section>
             <h2>Payment History</h2>
             <div id="payments-container">
                 <!-- Payment data will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Bar Chart Section -->
+        <section>
+            <h2>Purchase Trends</h2>
+            <div id="bar-chart-container">
+                <canvas id="payment-bar-chart"></canvas>
             </div>
         </section>
     </main>
