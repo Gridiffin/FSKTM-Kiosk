@@ -37,7 +37,7 @@
 
                 // Item details
                 const details = document.createElement("p");
-                details.textContent = `${item.name} - RM${item.price} (${item.category})`;
+                details.textContent = `${item.name} - RM${item.price} (${item.category}) - Available: ${item.amount}`; // Include amount
 
                 // Edit button
                 const editButton = document.createElement("button");
@@ -61,14 +61,16 @@
             const name = document.getElementById("item-name").value;
             const price = parseFloat(document.getElementById("item-price").value);
             const category = document.getElementById("item-category").value;
+            const amount = parseInt(document.getElementById("item-amount").value); // Get the amount
             const imageFile = document.getElementById("item-image").files[0]; // Get the uploaded file
 
-            if (name && price && category && imageFile) {
+            if (name && price && category && amount && imageFile) {
                 const formData = new FormData();
                 formData.append('action', 'add');
                 formData.append('prodName', name);
                 formData.append('prodPrice', price);
                 formData.append('prodType', category);
+                formData.append('amount', amount); // Add amount to FormData
                 formData.append('prodPic', imageFile); // Append the file
 
                 const response = await fetch('php/admin_process.php', {
@@ -89,6 +91,7 @@
             const newName = prompt("Enter new name:", item.name) || item.name;
             const newPrice = parseFloat(prompt("Enter new price:", item.price)) || item.price;
             const newCategory = prompt("Enter new category:", item.category) || item.category;
+            const newAmount = parseInt(prompt("Enter new amount:", item.amount)) || item.amount; // Get the new amount
             const newImageFile = document.getElementById("item-image").files[0]; // Get the new uploaded file
 
             const formData = new FormData();
@@ -97,6 +100,7 @@
             formData.append('prodName', newName);
             formData.append('prodPrice', newPrice);
             formData.append('prodType', newCategory);
+            formData.append('amount', newAmount); // Add amount to FormData
 
             if (newImageFile) {
                 formData.append('prodPic', newImageFile); // Append the new image file
@@ -198,11 +202,27 @@
         });
 
         // Logout Button Functionality
-        document.getElementById("logout-btn")?.addEventListener("click", () => {
-            // Clear sessionStorage
-            sessionStorage.removeItem('email');
-            // Redirect to index.html
-            window.location.href = 'index.html';
+        document.getElementById("logout-btn").addEventListener("click", async () => {
+            try {
+                const response = await fetch('php/logout.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Clear sessionStorage
+                    sessionStorage.removeItem('email');
+                    // Redirect to index.html
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Failed to log out. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error logging out:', error);
+                alert('An error occurred while logging out.');
+            }
         });
     </script>
 </head>
@@ -222,10 +242,6 @@
 
         <!-- Grouped Navigation Links and Dark Mode Button -->
         <div id="nav-and-dark-mode-container">
-            <!-- Profile Icon -->
-            <a href="./admin_profile.html" id="profile-btn" class="icon-btn">
-                <i class="fas fa-user"></i>
-            </a>
 
             <!-- Dark Mode Toggle Icon -->
             <button id="dark-mode-btn" class="icon-btn">
@@ -254,6 +270,7 @@
                 <input type="text" id="item-name" placeholder="Item Name" required>
                 <input type="number" id="item-price" placeholder="Price" required>
                 <input type="text" id="item-category" placeholder="Category (e.g., food, dessert, beverages)" required>
+                <input type="number" id="item-amount" placeholder="Amount Available" required> <!-- New field -->
                 <input type="file" id="item-image" name="item-image" accept="image/*" required>
                 <button type="button" onclick="addItem()">Add Item</button>
             </form>

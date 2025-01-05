@@ -10,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $prodName = $_POST['prodName'] ?? '';
     $prodPrice = $_POST['prodPrice'] ?? '';
     $prodType = $_POST['prodType'] ?? '';
+    $amount = $_POST['amount'] ?? 0; // Get the amount
 
     // Validate input
-    if (empty($prodName) || empty($prodPrice) || empty($prodType)) {
+    if (empty($prodName) || empty($prodPrice) || empty($prodType) || empty($amount)) {
         echo "All fields are required.";
         exit;
     }
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle file upload
     if (isset($_FILES['prodPic']) && $_FILES['prodPic']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = 'uploads/'; // Directory to store uploaded images
+        $uploadDir = '../assets/images/'; // Directory to store uploaded images
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true); // Create the directory if it doesn't exist
         }
@@ -44,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'add') {
         // Add new product
-        $query = "INSERT INTO product (prodName, prodPrice, prodPic, prodType) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO product (prodName, prodPrice, prodPic, prodType, amount) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sdss", $prodName, $prodPrice, $prodPic, $prodType);
+        $stmt->bind_param("sdssi", $prodName, $prodPrice, $prodPic, $prodType, $amount); // Include amount
 
         if ($stmt->execute()) {
             echo "Product added successfully!";
@@ -55,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } elseif ($action === 'edit' && $prodID) {
         // Edit existing product
-        $query = "UPDATE product SET prodName = ?, prodPrice = ?, prodPic = ?, prodType = ? WHERE prodID = ?";
+        $query = "UPDATE product SET prodName = ?, prodPrice = ?, prodPic = ?, prodType = ?, amount = ? WHERE prodID = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sdssi", $prodName, $prodPrice, $prodPic, $prodType, $prodID);
+        $stmt->bind_param("sdssii", $prodName, $prodPrice, $prodPic, $prodType, $amount, $prodID); // Include amount
 
         if ($stmt->execute()) {
             echo "Product updated successfully!";
