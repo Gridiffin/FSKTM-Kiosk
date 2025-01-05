@@ -41,30 +41,41 @@
             }
         }
 
-       // Add item to cart
+        // Add item to cart
         function addToCart(itemId, name, price) {
-        fetch('add_to_cart.php', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                item_id: itemId,
-                item_name: name,
-                item_price: price,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                showNotification("Product has been added to the cart!");
-                // Optionally, you can update the cart display here
+            // Check if the user is logged in by checking sessionStorage
+            const email = sessionStorage.getItem('email');
+            if (!email) {
+                // If not logged in, redirect to login.html
+                window.location.href = './login.html';
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+
+            // If logged in, add the item to the cart
+            fetch('php/add_to_cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                    item_name: name,
+                    item_price: price,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showNotification("Product has been added to the cart!");
+                } else {
+                    showNotification("Failed to add product to cart: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification("An error occurred. Please try again.");
+            });
+        }
 
         // Function to show a notification
         function showNotification(message) {
@@ -135,6 +146,7 @@
 
         // Load all items on page load
         document.addEventListener("DOMContentLoaded", () => {
+            // Fetch and display menu items
             fetchMenuItems().then(items => {
                 displayMenu(items);
             });
@@ -142,22 +154,15 @@
 
         // Handle checkout button click
         function handleCheckout() {
-            // Check if the user is logged in by checking the session
-            fetch('/check_session.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.loggedIn) {
-                        // User is logged in, redirect to checkout.html
-                        window.location.href = './checkout.html';
-                    } else {
-                        // User is not logged in, redirect to registration.html
-                        window.location.href = './registration.html';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error checking session:', error);
-                    alert('An error occurred. Please try again.');
-                });
+            // Check if the user is logged in by checking sessionStorage
+            const email = sessionStorage.getItem('email');
+            if (email) {
+                // User is logged in, redirect to checkout.html
+                window.location.href = './checkout.html';
+            } else {
+                // User is not logged in, redirect to login.html
+                window.location.href = './login.html';
+            }
         }
     </script>
 </head>
@@ -211,7 +216,7 @@
         </div>
 
         <!-- View Cart Button -->
-        <button id="checkout-button"><a href='./cart_section.html'>View Cart ></a></button>
+        <button id="checkout-button" onclick="handleCheckout()">View Cart ></button>
     </main>
 
     <!-- Notification -->

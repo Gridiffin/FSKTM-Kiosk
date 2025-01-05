@@ -58,7 +58,7 @@
 
             <!-- Payment Options -->
             <h3>Choose Payment Method</h3>
-            <form action="./save_receipt.php" method="POST">
+            <form action="php/save_receipt.php" method="POST">
                 <div class="payment-option">
                     <input type="radio" id="cash" name="payment_method" value="cash" required>
                     <label for="cash" class="payment-label">
@@ -77,6 +77,9 @@
                     <button type="submit" class="btn-login">Confirm Payment</button>
                 </div>
             </form>
+
+            <!-- Continue Shopping Button -->
+            <button onclick="window.location.href='products.html'" class="btn-continue-shopping">Continue Shopping</button>
         </div>
     </main>
 
@@ -94,51 +97,123 @@
 
     <!-- JavaScript -->
     <script>
-        // Retrieve cart data from the server
-async function fetchCart() {
-    try {
-        const response = await fetch('cart_section.php?action=fetch');
-        if (!response.ok) {
-            throw new Error('Failed to fetch cart data');
+        console.log("JavaScript code is running!"); // Debugging
+
+        // Fetch cart data from the server
+        async function fetchCart() {
+            try {
+                const response = await fetch('php/get_cart.php');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cart data');
+                }
+                const data = await response.json();
+                console.log("Cart data:", data); // Debugging
+                return data;
+            } catch (error) {
+                console.error('Error fetching cart data:', error);
+                return [];
+            }
         }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching cart data:', error);
-        return [];
-    }
-}
 
-// Function to render receipt items
-async function renderReceipt() {
-    const purchasedItems = document.getElementById("purchased-items");
-    const totalValue = document.getElementById("total-value");
-    let totalPrice = 0;
+        // Render cart items and calculate total price
+        async function renderCart() {
+            const purchasedItems = document.getElementById("purchased-items");
+            const totalValue = document.getElementById("total-value");
+            let totalPrice = 0;
 
-    // Clear existing items
-    purchasedItems.innerHTML = "";
+            // Clear existing items
+            purchasedItems.innerHTML = "";
 
-    // Fetch cart data from the server
-    const cart = await fetchCart();
+            // Fetch cart data
+            const cart = await fetchCart();
 
-    // Render each cart item
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        totalPrice += itemTotal;
+            // Render each cart item
+            cart.forEach(item => {
+                const itemPrice = parseFloat(item.item_price); // Ensure item_price is a number
+                const itemTotal = itemPrice * item.amount;
+                totalPrice += itemTotal;
 
-        const itemElement = document.createElement("li");
-        itemElement.innerHTML = `
-            ${item.name} - RM${item.price.toFixed(2)} x ${item.quantity} = RM${itemTotal.toFixed(2)}
-        `;
-        purchasedItems.appendChild(itemElement);
-    });
+                const itemElement = document.createElement("li");
+                itemElement.innerHTML = `
+                    <div class="item-details">
+                        <span class="item-name">${item.item_name}</span>
+                        <span class="item-price">RM${itemPrice.toFixed(2)}</span>
+                        <span class="item-quantity">
+                            <button onclick="updateQuantity('${item.item_id}', ${item.amount - 1})">-</button>
+                            <span>${item.amount}</span>
+                            <button onclick="updateQuantity('${item.item_id}', ${item.amount + 1})">+</button>
+                        </span>
+                        <span class="item-total">RM${itemTotal.toFixed(2)}</span>
+                        <button onclick="removeItem('${item.item_id}')" class="btn-remove">Remove</button>
+                    </div>
+                `;
+                purchasedItems.appendChild(itemElement);
+            });
 
-    // Update total price
-    totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
-}
+            // Update total price
+            totalValue.textContent = `RM${totalPrice.toFixed(2)}`;
+        }
 
-// Initial render
-renderReceipt();
+        // Update item quantity
+        async function updateQuantity(itemId, newQuantity) {
+            console.log("Updating quantity for item:", itemId, "New quantity:", newQuantity); // Debugging
+
+            if (newQuantity <= 0) {
+                removeItem(itemId);
+                return;
+            }
+
+            try {
+                const response = await fetch('php/update_cart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        item_id: itemId,
+                        amount: newQuantity,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update quantity');
+                }
+
+                // Re-render the cart after updating the quantity
+                renderCart();
+            } catch (error) {
+                console.error('Error updating quantity:', error);
+            }
+        }
+
+        // Remove item from cart
+        async function removeItem(itemId) {
+            console.log("Removing item:", itemId); // Debugging
+
+            try {
+                const response = await fetch('php/remove_from_cart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        item_id: itemId,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to remove item');
+                }
+
+                // Re-render the cart after removing the item
+                renderCart();
+            } catch (error) {
+                console.error('Error removing item:', error);
+            }
+        }
+
+        // Initial render
+        renderCart();
     </script>
 </body>
 </html>
